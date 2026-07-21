@@ -1,4 +1,4 @@
-import checkIcon from "../../../assets/icons/check.svg";
+import checkIcon from "../../../assets/icons/Check.svg";
 import warningIcon from "../../../assets/icons/Warning.svg";
 import { getCharacter } from "../../data/colorPalette";
 

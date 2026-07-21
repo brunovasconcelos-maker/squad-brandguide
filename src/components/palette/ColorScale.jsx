@@ -1,4 +1,5 @@
 import ContrastBadge from "./ContrastBadge";
+import CopyableColor from "./CopyableColor";
 import { characters } from "../../data/colorPalette";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
@@ -16,7 +17,8 @@ export default function ColorScale() {
               const isPrimary = swatch.step === character.primaryStep;
               return (
                 <div key={swatch.step} className="color-swatch">
-                  <div
+                  <CopyableColor
+                    hex={swatch.hex}
                     className="color-swatch__block"
                     style={{ backgroundColor: swatch.hex }}
                   >
@@ -25,7 +27,7 @@ export default function ColorScale() {
                         <ContrastBadge key={badge.color} color={badge.color} grade={badge.grade} />
                       ))}
                     </div>
-                  </div>
+                  </CopyableColor>
                   <div className="color-swatch__info">
                     <p className="color-swatch__step">
                       {isPrimary ? `${character.name}: ${swatch.step}` : swatch.step}
