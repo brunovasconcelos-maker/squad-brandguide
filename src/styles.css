@@ -775,3 +775,164 @@ body {
 .footer__text strong {
   font-weight: 600;
 }
+
+/* Tipografia page */
+
+.hero-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 540px;
+  padding: 94px 118px;
+  border-radius: 4px;
+  background: var(--color-white);
+}
+
+.hero-panel__text {
+  margin: 0;
+  max-width: 1163px;
+  font-family: "Fustat", sans-serif;
+  font-weight: 500;
+  font-size: 80px;
+  line-height: 1.1;
+  letter-spacing: -4px;
+  color: var(--color-black);
+  text-align: center;
+}
+
+.hero-panel__img {
+  width: 138px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin: 0 4px;
+  background: #d9d9d9;
+}
+
+/* Font weight showcase */
+
+.weight-showcase-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 100px;
+}
+
+.weight-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 580px;
+  padding: 40px 20px;
+  border-radius: 4px;
+  background: var(--color-white);
+}
+
+.weight-showcase p {
+  margin: 0;
+  font-family: "Fustat", sans-serif;
+  font-size: 56px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--color-black);
+  text-align: center;
+}
+
+/* Type caption (Font Weight: / Line Height: / Letter Spacing:) */
+
+.type-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.type-caption__label {
+  margin: 0;
+  width: 534px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+
+.type-caption__body {
+  margin: 0;
+  width: 534px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+
+/* Line height / letter spacing comparison */
+
+.type-comparison {
+  display: flex;
+  gap: 20px;
+  margin-top: 120px;
+}
+
+.type-comparison__col {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.type-sample-panel {
+  position: relative;
+  height: 320px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.type-sample-panel__text {
+  position: absolute;
+  left: 98px;
+  top: 88px;
+  width: 494px;
+}
+
+.type-sample-panel__text p {
+  margin: 0 0 16px 0;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 80px;
+  line-height: 0.8;
+  letter-spacing: -4px;
+  color: var(--color-black);
+}
+
+.type-sample-panel__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Guide-line color pulled visually from the Figma export (a rasterized vector
+   stroke) — the connector doesn't expose an exact fill for vector strokes,
+   only fills on shapes/text. Flagged as an approximation, unlike every other
+   color on this page. */
+.guide-line {
+  position: absolute;
+  pointer-events: none;
+  background: #a6abf5;
+}
+
+.guide-line--h {
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.guide-line--v {
+  width: 1px;
+}
