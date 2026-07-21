@@ -10,6 +10,7 @@ export default function CopyableColor({ hex, className, style, children }) {
 
   function handleMouseLeave() {
     setTooltipPos(null);
+    setCopied(false);
   }
 
   async function handleClick() {
@@ -32,16 +33,12 @@ export default function CopyableColor({ hex, className, style, children }) {
     >
       {children}
 
-      {copied && (
-        <span className="copy-toast">Copiado!</span>
-      )}
-
-      {tooltipPos && !copied && (
+      {tooltipPos && (
         <span
-          className="copy-tooltip"
+          className={copied ? "copy-tooltip copy-tooltip--copied" : "copy-tooltip"}
           style={{ left: tooltipPos.x + 16, top: tooltipPos.y + 16 }}
         >
-          Copy HEX
+          {copied ? "Copiado" : "Copy HEX"}
         </span>
       )}
     </div>
