@@ -23,6 +23,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
 }
 
 /* Nav */
@@ -354,7 +356,7 @@ body {
 
 .page__content {
   margin-top: 328px;
-  padding: 0 20px 140px;
+  padding: 0 20px;
 }
 
 /* SF Pro isn't distributable outside Apple platforms, so labels that use it
@@ -737,4 +739,38 @@ body {
   background: var(--color-black);
   border: none;
   color: var(--color-white);
+}
+
+/* Footer */
+
+.footer {
+  margin-top: auto;
+  margin-bottom: 140px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding: 40px 20px 60px;
+  background: var(--color-bg);
+}
+
+.footer__logo {
+  width: 133.005px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.footer__text {
+  width: 572px;
+  max-width: 100%;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+
+.footer__text strong {
+  font-weight: 600;
 }
