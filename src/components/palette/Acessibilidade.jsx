@@ -20,12 +20,14 @@ export default function Acessibilidade() {
           ou texto.
         </p>
       </div>
-      <button className="ver-contraste" type="button">
-        <span className="ver-contraste__icon">
-          <img src={contrastIcon} alt="" />
-        </span>
-        Ver contraste
-      </button>
+      <div className="ver-contraste-wrap">
+        <button className="ver-contraste" type="button">
+          <span className="ver-contraste__icon">
+            <img src={contrastIcon} alt="" />
+          </span>
+          Ver contraste
+        </button>
+      </div>
     </div>
   );
 }

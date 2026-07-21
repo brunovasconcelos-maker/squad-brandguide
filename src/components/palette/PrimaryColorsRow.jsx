@@ -1,4 +1,5 @@
 import ContrastBadge from "./ContrastBadge";
+import CopyableColor from "./CopyableColor";
 import { characters, getPrimarySwatch } from "../../data/colorPalette";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
@@ -20,8 +21,9 @@ export default function PrimaryColorsRow() {
           {row.map((character) => {
             const primary = getPrimarySwatch(character);
             return (
-              <div
+              <CopyableColor
                 key={character.name}
+                hex={primary.hex}
                 className="primary-color-card"
                 style={{ backgroundColor: primary.hex }}
               >
@@ -40,7 +42,7 @@ export default function PrimaryColorsRow() {
                     <p>{character.primaryHsl}</p>
                   </div>
                 </div>
-              </div>
+              </CopyableColor>
             );
           })}
         </div>
