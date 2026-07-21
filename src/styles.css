@@ -12,7 +12,6 @@ html,
 body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
   background: var(--color-bg);
   font-family: "Inter", sans-serif;
 }
@@ -21,19 +20,25 @@ body {
 .page {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  overflow-x: hidden;
   background: var(--color-bg);
 }
 
 /* Nav */
 
 .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 64px;
   padding: 8px 20px;
+  background: var(--color-bg);
 }
 
 .nav__logo {
@@ -82,6 +87,7 @@ body {
 
 .cta {
   position: fixed;
+  z-index: 20;
   left: 50%;
   bottom: 30px;
   transform: translateX(-50%);
@@ -151,6 +157,7 @@ body {
 
 .bottom-nav {
   position: fixed;
+  z-index: 20;
   left: 50%;
   bottom: 30px;
   transform: translateX(-50%);
@@ -200,6 +207,7 @@ body {
 
 .menu-overlay {
   position: fixed;
+  z-index: 30;
   top: 16px;
   right: 20px;
   bottom: 40px;
@@ -276,6 +284,7 @@ body {
 
 .home-menu-overlay {
   position: fixed;
+  z-index: 30;
   top: 16px;
   right: 20px;
   width: 453px;
@@ -339,4 +348,361 @@ body {
 
 .home-menu-overlay__cta:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Paleta de Cores page content */
+
+.page__content {
+  margin-top: 328px;
+  padding: 0 20px 140px;
+}
+
+/* SF Pro isn't distributable outside Apple platforms, so labels that use it
+   in Figma (badges, swatch labels, "Ver contraste") fall back to the system
+   UI font stack below, which resolves to actual SF Pro on Apple devices. */
+
+/* Contrast badge (used on primary cards + scale swatches) */
+
+.contrast-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  white-space: nowrap;
+}
+
+.contrast-badge__swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.contrast-badge--white {
+  color: var(--color-white);
+}
+
+.contrast-badge--white .contrast-badge__swatch {
+  background: var(--color-white);
+}
+
+.contrast-badge--black {
+  color: var(--color-black);
+}
+
+.contrast-badge--black .contrast-badge__swatch {
+  background: var(--color-black);
+}
+
+/* Primary colors row */
+
+.primary-colors {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.primary-colors__row {
+  display: flex;
+  gap: 20px;
+}
+
+.primary-color-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 320px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.primary-color-card__badges {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.primary-color-card__info {
+  position: absolute;
+  left: 16px;
+  top: 214px;
+  width: 132px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  letter-spacing: -0.23px;
+  color: var(--color-black);
+}
+
+.primary-color-card__name {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.primary-color-card__values {
+  margin: 0;
+}
+
+.primary-color-card__values p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Text sections (Como usar / Acessibilidade) */
+
+.text-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 40px;
+  padding-right: 40px;
+  margin-top: 120px;
+}
+
+.text-section__heading {
+  margin: 0;
+  width: 534px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: var(--color-white);
+}
+
+.text-section__body {
+  width: 534px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+
+.text-section__body p {
+  margin: 0 0 16px 0;
+}
+
+.text-section__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ver contraste button */
+
+.ver-contraste {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 360px;
+  border: 1px solid #767676;
+  background: transparent;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 16px;
+  color: var(--color-white);
+  letter-spacing: -0.23px;
+}
+
+.ver-contraste__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.ver-contraste__icon img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Full color scale */
+
+.color-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  margin-top: 120px;
+}
+
+.color-scale-row {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.color-scale-row__name {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: var(--color-white);
+}
+
+.color-scale-row__swatches {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.color-swatch {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.color-swatch__block {
+  position: relative;
+  height: 140px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.color-swatch__badges {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.color-swatch__info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  letter-spacing: -0.23px;
+}
+
+.color-swatch__step {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+.color-swatch__hex {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #a6abb2;
+}
+
+/* Contrast examples */
+
+.contrast-examples {
+  display: flex;
+  gap: 20px;
+  margin-top: 100px;
+}
+
+.contrast-example {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 320px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.contrast-example__badge {
+  position: absolute;
+  left: 16px;
+  top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  white-space: nowrap;
+}
+
+.contrast-example__badge-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.contrast-example__result {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 10px 16px;
+  border-radius: 360px;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 0.9;
+  color: var(--color-black);
+}
+
+.contrast-example__result--pass {
+  background: var(--color-white);
+}
+
+.contrast-example__result--fail {
+  background: #f26c37;
+}
+
+.contrast-example__result img {
+  width: 16px;
+  height: 16px;
+}
+
+.contrast-example__name {
+  position: absolute;
+  left: 50%;
+  top: 124px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 80px;
+  line-height: 0.9;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.contrast-example__label {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  white-space: nowrap;
 }
