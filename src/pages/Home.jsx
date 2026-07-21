@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
+import HomeMenuOverlay from "../components/HomeMenuOverlay";
 import arrowRight from "../../assets/icons/ArrowRight.svg";
 import { pages } from "../pageConfig";
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="home">
-      <Nav />
+      <Nav onMenuClick={() => setMenuOpen(true)} />
 
       <Link className="cta" to={pages[0].path}>
         <span className="cta__inner">
@@ -14,6 +18,8 @@ export default function Home() {
           <img className="cta__icon" src={arrowRight} alt="" />
         </span>
       </Link>
+
+      {menuOpen && <HomeMenuOverlay onClose={() => setMenuOpen(false)} />}
     </div>
   );
 }
