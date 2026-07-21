@@ -142,7 +142,7 @@ body {
   font-weight: 500;
   font-size: 120px;
   line-height: 1.2;
-  letter-spacing: -4px;
+  letter-spacing: -2px;
   color: var(--color-white);
   white-space: nowrap;
 }
