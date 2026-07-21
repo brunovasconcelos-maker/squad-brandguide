@@ -195,3 +195,79 @@ body {
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
 }
+
+/* Menu overlay */
+
+.menu-overlay {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  bottom: 40px;
+  width: 453px;
+  background: var(--color-white);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.menu-overlay__exit {
+  position: absolute;
+  top: 16px;
+  left: 30px;
+  padding: 10px;
+  font-family: "Fustat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--color-black);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.menu-overlay__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-overlay__close img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.menu-overlay__list {
+  position: absolute;
+  left: 40px;
+  top: 446px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-overlay__item {
+  font-family: "Fustat", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--color-black);
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.menu-overlay__list:hover .menu-overlay__item {
+  opacity: 0.4;
+}
+
+.menu-overlay__list .menu-overlay__item:hover {
+  opacity: 1;
+  transform: translateX(12px);
+}
