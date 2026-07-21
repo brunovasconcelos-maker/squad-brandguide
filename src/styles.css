@@ -356,6 +356,7 @@ body {
 
 .page__content {
   margin-top: 328px;
+  margin-bottom: 160px;
   padding: 0 20px;
 }
 
@@ -745,7 +746,7 @@ body {
 
 .footer {
   margin-top: auto;
-  margin-bottom: 140px;
+  margin-bottom: 20px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
