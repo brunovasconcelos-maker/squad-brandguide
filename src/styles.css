@@ -17,7 +17,8 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-.home {
+.home,
+.page {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -128,4 +129,69 @@ body {
 
 .cta:hover .cta__icon {
   transform: translateX(4px);
+}
+
+/* Page title */
+
+.page__title {
+  position: absolute;
+  left: 20px;
+  top: 104px;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 120px;
+  line-height: 1.2;
+  letter-spacing: -4px;
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+/* Bottom nav */
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.bottom-nav__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  border-radius: 12px;
+  background: transparent;
+  text-decoration: none;
+}
+
+.bottom-nav__item--active {
+  background: var(--color-white);
+}
+
+.bottom-nav__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.bottom-nav__icon--outline {
+  background-color: var(--color-white);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
 }
