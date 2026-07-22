@@ -12,10 +12,13 @@ export default function Hero() {
   return (
     <div className="hero-panel">
       <p className="hero-panel__text">
-        Squad <InlineImg src={inline01} /> para deixar marca: da web aos
-        impressos, <InlineImg src={inline02} /> cores, fonts,{" "}
-        <InlineImg src={inline03} /> imagens e voz. Tudo{" "}
-        <InlineImg src={inline04} /> em um só <InlineImg src={inline05} />{" "}
+        Squad <InlineImg src={inline01} /> para deixar marca:
+        <br />
+        da web aos impressos, <InlineImg src={inline02} /> cores,
+        <br />
+        fonts, <InlineImg src={inline03} /> imagens e voz.
+        <br />
+        Tudo <InlineImg src={inline04} /> em um só <InlineImg src={inline05} />{" "}
         lugar.
       </p>
     </div>
