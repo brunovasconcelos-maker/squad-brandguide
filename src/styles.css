@@ -937,3 +937,136 @@ body {
 .guide-line--v {
   width: 1px;
 }
+
+/* Character cards with functional sliders */
+
+.character-cards {
+  display: flex;
+  gap: 20px;
+  height: 420px;
+  margin-top: 142px;
+}
+
+.character-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.character-card__text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 453px;
+  text-align: center;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -2.24px;
+}
+
+.character-card__text p {
+  margin: 0;
+}
+
+.character-card__slider-wrap {
+  position: absolute;
+  left: 50%;
+  top: 307px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}
+
+.character-card__label {
+  margin: 0;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.64px;
+  color: #30031b;
+  white-space: nowrap;
+}
+
+/* Slider track/thumb color is a visual best-effort match — Figma exports this
+   as a rasterized line + ellipse rather than flat fills, so the connector
+   doesn't expose an exact hex (same limitation as the guide lines above). */
+.character-card__slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 160px;
+  height: 14px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.character-card__slider::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--color-black);
+}
+
+.character-card__slider::-moz-range-track {
+  height: 1px;
+  background: var(--color-black);
+}
+
+.character-card__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-black);
+  margin-top: -6.5px;
+}
+
+.character-card__slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-black);
+}
+
+/* Recursos */
+
+.recursos-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  width: 534px;
+  max-width: 100%;
+  height: 56px;
+  border-bottom: 1px solid #525b5b;
+}
+
+.recursos-row__label {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+
+.recursos-row__download {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-white);
+  text-decoration: none;
+  white-space: nowrap;
+}
