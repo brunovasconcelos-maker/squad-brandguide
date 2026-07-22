@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import BrandPage from "./pages/BrandPage";
+import LogoContent from "./pages/LogoContent";
 import PaletaDeCoresContent from "./pages/PaletaDeCoresContent";
 import TipografiaContent from "./pages/TipografiaContent";
 import ImagensVideosContent from "./pages/ImagensVideosContent";
 import { pages } from "./pageConfig";
 
 const CONTENT_BY_SLUG = {
+  logo: LogoContent,
   "paleta-de-cores": PaletaDeCoresContent,
   tipografia: TipografiaContent,
   "imagens-e-videos": ImagensVideosContent,
