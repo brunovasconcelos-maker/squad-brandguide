@@ -3,11 +3,13 @@ import Home from "./pages/Home";
 import BrandPage from "./pages/BrandPage";
 import PaletaDeCoresContent from "./pages/PaletaDeCoresContent";
 import TipografiaContent from "./pages/TipografiaContent";
+import ImagensVideosContent from "./pages/ImagensVideosContent";
 import { pages } from "./pageConfig";
 
 const CONTENT_BY_SLUG = {
   "paleta-de-cores": PaletaDeCoresContent,
   tipografia: TipografiaContent,
+  "imagens-e-videos": ImagensVideosContent,
 };
 
 export default function App() {
