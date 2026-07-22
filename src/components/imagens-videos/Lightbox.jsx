@@ -7,7 +7,7 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Lightbox({ image, images, onClose, onSelect }) {
+export default function Lightbox({ image, onClose }) {
   const [naturalSize, setNaturalSize] = useState(null);
 
   useEffect(() => {
@@ -29,10 +29,6 @@ export default function Lightbox({ image, images, onClose, onSelect }) {
       document.body.style.overflow = previousOverflow;
     };
   }, []);
-
-  const similar = images
-    .filter((img) => img.character === image.character && img.filename !== image.filename)
-    .slice(0, 4);
 
   const aspectRatio = naturalSize ? computeAspectRatio(naturalSize.width, naturalSize.height) : null;
   const type = VIDEO_EXTENSIONS.has(image.extension.toLowerCase()) ? "Vídeo" : "Imagem";
@@ -71,24 +67,6 @@ export default function Lightbox({ image, images, onClose, onSelect }) {
             }
           />
         </div>
-
-        {similar.length > 0 && (
-          <div className="lightbox__similar">
-            <p className="lightbox__similar-label">Ver similares:</p>
-            <div className="lightbox__similar-track">
-              {similar.map((img) => (
-                <button
-                  key={img.filename}
-                  type="button"
-                  className="lightbox__similar-thumb"
-                  onClick={() => onSelect(img)}
-                >
-                  <img src={img.src} alt={img.title} />
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         <div className="lightbox__footer">
           <div className="lightbox__tags">

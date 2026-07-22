@@ -40,12 +40,7 @@ export default function ImageGrid({ images }) {
       ))}
 
       {openImage && (
-        <Lightbox
-          image={openImage}
-          images={images}
-          onClose={() => setOpenImage(null)}
-          onSelect={setOpenImage}
-        />
+        <Lightbox image={openImage} onClose={() => setOpenImage(null)} />
       )}
     </div>
   );

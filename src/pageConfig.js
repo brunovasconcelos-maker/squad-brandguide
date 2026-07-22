@@ -38,7 +38,7 @@ export const pages = [
   {
     slug: "imagens-e-videos",
     path: "/imagens-e-videos",
-    title: "Imagens e Vídeos",
+    title: "Imagens & Vídeos",
     iconOutline: imagensVideosOutline,
     iconFill: imagensVideosFill,
   },
