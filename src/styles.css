@@ -1211,3 +1211,209 @@ body {
 .logo-swatch--selected {
   border: 3px solid #00e012;
 }
+
+/* Logo page: showcase grid (Logo Primária / Logo Secundária) */
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 120px;
+  width: 100%;
+}
+
+.logo-grid__card {
+  position: relative;
+  height: 320px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-grid__card--white {
+  background: var(--color-white);
+}
+
+.logo-grid__card--black {
+  background: var(--color-black);
+}
+
+.logo-grid__card--gradient,
+.logo-grid__card--photo {
+  background: var(--color-black);
+}
+
+.logo-grid__card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-grid__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.logo-grid__logo {
+  position: relative;
+  z-index: 1;
+  height: auto;
+}
+
+.logo-grid__logo--primary {
+  width: 51%;
+  max-width: 356px;
+}
+
+.logo-grid__logo--secondary {
+  width: 34%;
+  max-width: 238px;
+}
+
+/* Logo page: Recursos download rows reuse .text-section + .recursos-row */
+
+/* Logo page: Clearspace */
+
+.clearspace-panel {
+  margin-top: 120px;
+  width: 100%;
+  min-height: 640px;
+  background: var(--color-white);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  box-sizing: border-box;
+}
+
+.clearspace-frame {
+  position: relative;
+  width: fit-content;
+  padding: 47px;
+  border: 1px dashed #a8c0ff;
+  box-sizing: border-box;
+}
+
+.clearspace-frame__logo {
+  display: block;
+  width: 480px;
+  max-width: 60vw;
+  height: auto;
+}
+
+.clearspace-frame__corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #a8c0ff;
+  border-radius: 50%;
+  background: var(--color-white);
+}
+
+.clearspace-frame__corner--tl {
+  top: -5px;
+  left: -5px;
+}
+
+.clearspace-frame__corner--tr {
+  top: -5px;
+  right: -5px;
+}
+
+.clearspace-frame__corner--bl {
+  bottom: -5px;
+  left: -5px;
+}
+
+.clearspace-frame__corner--br {
+  bottom: -5px;
+  right: -5px;
+}
+
+.clearspace-frame__legend {
+  position: absolute;
+  top: -48px;
+  left: -1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.clearspace-frame__legend-tick {
+  width: 1px;
+  height: 20px;
+  background: #a8c0ff;
+}
+
+.clearspace-frame__legend-label {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  letter-spacing: -0.48px;
+  color: var(--color-black);
+}
+
+/* Logo page: Usos incorretos */
+
+.fail-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 32px;
+  padding: 10px 16px;
+  border-radius: 360px;
+  background: #f26c37;
+}
+
+.fail-badge__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.fail-badge__label {
+  margin: 0;
+  font-family: "Fustat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 0.9;
+  color: var(--color-black);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.usos-incorretos__logo--outline {
+  filter: url(#logo-outline-filter);
+}
+
+.usos-incorretos__logo--rotated {
+  transform: rotate(-7.26deg);
+}
+
+.usos-incorretos__crop {
+  position: relative;
+  width: 29.4%;
+  max-width: 205px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.usos-incorretos__crop-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 356px;
+  max-width: none;
+  height: auto;
+}
