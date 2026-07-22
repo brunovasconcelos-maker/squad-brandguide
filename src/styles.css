@@ -1145,3 +1145,69 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+/* Logo page */
+
+.logo-showcase {
+  position: relative;
+  width: 100%;
+  height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.logo-showcase__logo {
+  width: 555px;
+  max-width: 60%;
+  height: auto;
+}
+
+.logo-swatches {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 300px;
+  padding: 40px;
+  border-radius: 8px;
+  background: var(--color-bg);
+  box-sizing: border-box;
+}
+
+.logo-swatches__label {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+.logo-swatches__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 40px);
+  gap: 20px;
+}
+
+.logo-swatch {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.logo-swatch--black {
+  border: 1px solid #434343;
+}
+
+.logo-swatch--selected {
+  border: 3px solid #00e012;
+}
