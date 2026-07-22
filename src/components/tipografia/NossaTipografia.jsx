@@ -1,7 +1,7 @@
 export default function NossaTipografia() {
   return (
     <div className="text-section">
-      <p className="text-section__heading">Nossa Tipografia:</p>
+      <p className="text-section__heading">Nossa Tipografia</p>
       <div className="text-section__body">
         <p>
           Nossa tipografia é a Fustat, disponível no Google Fonts. Uma sans
