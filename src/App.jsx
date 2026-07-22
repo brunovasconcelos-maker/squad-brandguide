@@ -5,6 +5,7 @@ import LogoContent from "./pages/LogoContent";
 import PaletaDeCoresContent from "./pages/PaletaDeCoresContent";
 import TipografiaContent from "./pages/TipografiaContent";
 import ImagensVideosContent from "./pages/ImagensVideosContent";
+import ScrollToTop from "./components/ScrollToTop";
 import { pages } from "./pageConfig";
 
 const CONTENT_BY_SLUG = {
@@ -16,20 +17,23 @@ const CONTENT_BY_SLUG = {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      {pages.map((page) => {
-        const Content = CONTENT_BY_SLUG[page.slug];
-        return (
-          <Route
-            key={page.slug}
-            path={page.path}
-            element={
-              <BrandPage title={page.title}>{Content ? <Content /> : null}</BrandPage>
-            }
-          />
-        );
-      })}
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {pages.map((page) => {
+          const Content = CONTENT_BY_SLUG[page.slug];
+          return (
+            <Route
+              key={page.slug}
+              path={page.path}
+              element={
+                <BrandPage title={page.title}>{Content ? <Content /> : null}</BrandPage>
+              }
+            />
+          );
+        })}
+      </Routes>
+    </>
   );
 }
