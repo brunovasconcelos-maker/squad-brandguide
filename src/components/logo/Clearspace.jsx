@@ -1,4 +1,4 @@
-import logoBlack from "../../../assets/logo/logo-black.svg";
+import clearspaceImg from "../../../assets/images/clearspace.png";
 
 export default function Clearspace() {
   return (
@@ -16,17 +16,11 @@ export default function Clearspace() {
         </div>
       </div>
       <div className="clearspace-panel">
-        <div className="clearspace-frame">
-          <span className="clearspace-frame__corner clearspace-frame__corner--tl" />
-          <span className="clearspace-frame__corner clearspace-frame__corner--tr" />
-          <span className="clearspace-frame__corner clearspace-frame__corner--bl" />
-          <span className="clearspace-frame__corner clearspace-frame__corner--br" />
-          <div className="clearspace-frame__legend">
-            <p className="clearspace-frame__legend-label">x</p>
-            <span className="clearspace-frame__legend-tick" />
-          </div>
-          <img className="clearspace-frame__logo" src={logoBlack} alt="Logo" />
-        </div>
+        <img
+          className="clearspace-panel__image"
+          src={clearspaceImg}
+          alt="Diagrama de clearspace da logo"
+        />
       </div>
     </>
   );

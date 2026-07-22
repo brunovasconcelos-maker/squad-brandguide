@@ -1,5 +1,5 @@
 import logoBlack from "../../../assets/logo/logo-black.svg";
-import logo2Black from "../../../assets/logo/logo-2-black.svg";
+import usoIncorretoImg from "../../../assets/images/uso-incorreto.png";
 import FailBadge from "./FailBadge";
 
 export default function UsosIncorretos() {
@@ -50,8 +50,8 @@ export default function UsosIncorretos() {
         <div className="logo-grid__card logo-grid__card--white">
           <FailBadge />
           <img
-            className="logo-grid__logo logo-grid__logo--secondary"
-            src={logo2Black}
+            className="logo-grid__card-bg"
+            src={usoIncorretoImg}
             alt="Logo com o .com desalinhado em relação ao squad (uso incorreto)"
           />
         </div>
