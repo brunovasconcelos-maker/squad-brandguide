@@ -47,11 +47,16 @@ const modules = import.meta.glob(
 
 export const images = Object.entries(modules)
   .map(([path, src]) => {
-    const filename = path.split("/").pop().replace(/\.[^.]+$/, "");
+    const file = path.split("/").pop();
+    const extension = file.split(".").pop();
+    const filename = file.replace(/\.[^.]+$/, "");
+    const character = filename.split("-")[0];
     return {
       filename,
       title: TITLES[filename] || filename,
       src,
+      extension,
+      character,
     };
   })
   .sort((a, b) => a.title.localeCompare(b.title, "pt-BR"));
