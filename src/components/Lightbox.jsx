@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { computeAspectRatio } from "../../utils/aspectRatio";
+import { computeAspectRatio } from "../utils/aspectRatio";
 
 const VIDEO_EXTENSIONS = new Set(["mp4", "mov", "webm"]);
 

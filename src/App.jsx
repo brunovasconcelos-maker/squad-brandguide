@@ -5,6 +5,7 @@ import LogoContent from "./pages/LogoContent";
 import PaletaDeCoresContent from "./pages/PaletaDeCoresContent";
 import TipografiaContent from "./pages/TipografiaContent";
 import ImagensVideosContent from "./pages/ImagensVideosContent";
+import PersonagensContent from "./pages/PersonagensContent";
 import ScrollToTop from "./components/ScrollToTop";
 import { pages } from "./pageConfig";
 
@@ -13,6 +14,7 @@ const CONTENT_BY_SLUG = {
   "paleta-de-cores": PaletaDeCoresContent,
   tipografia: TipografiaContent,
   "imagens-e-videos": ImagensVideosContent,
+  personagens: PersonagensContent,
 };
 
 export default function App() {
