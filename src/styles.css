@@ -1228,7 +1228,7 @@ body {
   opacity: 1;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
   .image-grid {
     grid-template-columns: repeat(4, 1fr);
   }
