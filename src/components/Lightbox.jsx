@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { computeAspectRatio } from "../utils/aspectRatio";
+import { isVideoExtension } from "../utils/mediaType";
 import caretLeft from "../../assets/icons/CaretLeft.svg";
 import caretRight from "../../assets/icons/CaretRight.svg";
-
-const VIDEO_EXTENSIONS = new Set(["mp4", "mov", "webm"]);
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -41,7 +40,7 @@ export default function Lightbox({ image, images, onClose, onNavigate }) {
   }, []);
 
   const aspectRatio = naturalSize ? computeAspectRatio(naturalSize.width, naturalSize.height) : null;
-  const type = VIDEO_EXTENSIONS.has(image.extension.toLowerCase()) ? "Vídeo" : "Imagem";
+  const type = isVideoExtension(image.extension) ? "Vídeo" : "Imagem";
 
   return (
     <div className="lightbox" onClick={onClose}>
