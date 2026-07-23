@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Lightbox from "./Lightbox";
-import downloadIcon from "../../../assets/icons/download.svg";
+import downloadIcon from "../../assets/icons/download.svg";
 
-export default function ImageGrid({ images }) {
+export default function ImageGrid({ images, aspect = "16:9" }) {
   const [openImage, setOpenImage] = useState(null);
+  const isSquare = aspect === "1:1";
 
   return (
-    <div className="image-grid">
+    <div className={isSquare ? "image-grid image-grid--square" : "image-grid"}>
       {images.map((image) => (
         <div
           key={image.filename}
-          className="image-grid__cell"
+          className={
+            isSquare ? "image-grid__cell image-grid__cell--square" : "image-grid__cell"
+          }
           role="button"
           tabIndex={0}
           onClick={() => setOpenImage(image)}

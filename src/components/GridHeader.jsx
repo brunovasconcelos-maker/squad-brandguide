@@ -1,6 +1,6 @@
-import filterIcon from "../../../assets/icons/filter.svg";
+import filterIcon from "../../assets/icons/filter.svg";
 
-export default function Header({ count }) {
+export default function GridHeader({ count }) {
   return (
     <div className="images-header">
       <button className="ver-contraste" type="button">
