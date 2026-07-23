@@ -43,7 +43,12 @@ export default function ImageGrid({ images, aspect = "16:9" }) {
       ))}
 
       {openImage && (
-        <Lightbox image={openImage} onClose={() => setOpenImage(null)} />
+        <Lightbox
+          image={openImage}
+          images={images}
+          onClose={() => setOpenImage(null)}
+          onNavigate={setOpenImage}
+        />
       )}
     </div>
   );

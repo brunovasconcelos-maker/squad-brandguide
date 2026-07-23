@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { computeAspectRatio } from "../utils/aspectRatio";
+import caretLeft from "../../assets/icons/CaretLeft.svg";
+import caretRight from "../../assets/icons/CaretRight.svg";
 
 const VIDEO_EXTENSIONS = new Set(["mp4", "mov", "webm"]);
 
@@ -7,8 +9,14 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Lightbox({ image, onClose }) {
+export default function Lightbox({ image, images, onClose, onNavigate }) {
   const [naturalSize, setNaturalSize] = useState(null);
+
+  const currentIndex = images.findIndex((img) => img.filename === image.filename);
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < images.length - 1;
+  const goPrev = () => hasPrev && onNavigate(images[currentIndex - 1]);
+  const goNext = () => hasNext && onNavigate(images[currentIndex + 1]);
 
   useEffect(() => {
     setNaturalSize(null);
@@ -17,10 +25,12 @@ export default function Lightbox({ image, onClose }) {
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") goPrev();
+      if (event.key === "ArrowRight") goNext();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  });
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -35,6 +45,23 @@ export default function Lightbox({ image, onClose }) {
 
   return (
     <div className="lightbox" onClick={onClose}>
+      {hasPrev && (
+        <button
+          className="lightbox__nav lightbox__nav--prev"
+          type="button"
+          aria-label="Imagem anterior"
+          onClick={(event) => {
+            event.stopPropagation();
+            goPrev();
+          }}
+        >
+          <span
+            className="lightbox__nav-icon"
+            style={{ maskImage: `url(${caretLeft})`, WebkitMaskImage: `url(${caretLeft})` }}
+          />
+        </button>
+      )}
+
       <div className="lightbox__panel" onClick={(event) => event.stopPropagation()}>
         <button
           className="lightbox__close"
@@ -96,6 +123,23 @@ export default function Lightbox({ image, onClose }) {
           </a>
         </div>
       </div>
+
+      {hasNext && (
+        <button
+          className="lightbox__nav lightbox__nav--next"
+          type="button"
+          aria-label="Próxima imagem"
+          onClick={(event) => {
+            event.stopPropagation();
+            goNext();
+          }}
+        >
+          <span
+            className="lightbox__nav-icon"
+            style={{ maskImage: `url(${caretRight})`, WebkitMaskImage: `url(${caretRight})` }}
+          />
+        </button>
+      )}
     </div>
   );
 }
