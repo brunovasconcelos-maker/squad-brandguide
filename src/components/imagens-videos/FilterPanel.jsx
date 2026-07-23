@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../../utils/imageFilters";
 import imageSquareIcon from "../../../assets/icons/ImageSquare.svg";
 import imageSquareFillIcon from "../../../assets/icons/ImageSquare-1.svg";
@@ -13,31 +13,8 @@ function maskStyle(icon) {
   return { maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` };
 }
 
-const PANEL_MARGIN = 8;
-const VIEWPORT_GUTTER = 20;
-
-export default function FilterPanel({ triggerRef, appliedFilters, onCancel, onSave }) {
+export default function FilterPanel({ appliedFilters, onCancel, onSave }) {
   const [draft, setDraft] = useState(appliedFilters);
-  const [style, setStyle] = useState(null);
-
-  useLayoutEffect(() => {
-    function updatePosition() {
-      if (!triggerRef.current) return;
-      const rect = triggerRef.current.getBoundingClientRect();
-      setStyle({
-        top: rect.bottom + PANEL_MARGIN,
-        left: rect.left,
-        maxHeight: `calc(100vh - ${rect.bottom + PANEL_MARGIN + VIEWPORT_GUTTER}px)`,
-      });
-    }
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [triggerRef]);
 
   useEffect(() => {
     function handleKeyDown(event) {
@@ -50,7 +27,7 @@ export default function FilterPanel({ triggerRef, appliedFilters, onCancel, onSa
   return (
     <>
       <div className="filter-panel-backdrop" onClick={onCancel} />
-      <div className="filter-panel" style={style || { visibility: "hidden" }}>
+      <div className="filter-panel">
         <div className="filter-panel__header">
           <p className="filter-panel__title">Filtros</p>
           <button
@@ -73,37 +50,39 @@ export default function FilterPanel({ triggerRef, appliedFilters, onCancel, onSa
         <div className="filter-panel__body">
           <div className="filter-group">
             <p className="filter-group__label">Tipo de mídia:</p>
-            <div className="filter-group__pills">
+            <div className="media-type-cards">
               <button
                 type="button"
-                className={`filter-pill${draft.mediaType === "imagem" ? " filter-pill--selected" : ""}`}
+                className={`media-type-card${draft.mediaType === "imagem" ? " media-type-card--selected" : ""}`}
                 onClick={() => setDraft((d) => ({ ...d, mediaType: "imagem" }))}
               >
                 <span
-                  className="filter-pill__icon"
+                  className="media-type-card__icon"
                   style={maskStyle(draft.mediaType === "imagem" ? imageSquareFillIcon : imageSquareIcon)}
                 />
-                Imagem
+                <span className="media-type-card__label">Imagem</span>
               </button>
               <button
                 type="button"
-                className={`filter-pill${draft.mediaType === "video" ? " filter-pill--selected" : ""}`}
+                className={`media-type-card${draft.mediaType === "video" ? " media-type-card--selected" : ""}`}
                 onClick={() => setDraft((d) => ({ ...d, mediaType: "video" }))}
               >
                 <span
-                  className="filter-pill__icon"
+                  className="media-type-card__icon"
                   style={maskStyle(draft.mediaType === "video" ? videoCameraFillIcon : videoCameraIcon)}
                 />
-                Vídeo
+                <span className="media-type-card__label">Vídeo</span>
               </button>
               <button
                 type="button"
-                className={`filter-pill${draft.mediaType === "ambos" ? " filter-pill--selected" : ""}`}
+                className={`media-type-card${draft.mediaType === "ambos" ? " media-type-card--selected" : ""}`}
                 onClick={() => setDraft((d) => ({ ...d, mediaType: "ambos" }))}
               >
-                <span className="filter-pill__icon" style={maskStyle(imageSquareIcon)} />
-                <span className="filter-pill__icon" style={maskStyle(videoCameraIcon)} />
-                Ambos
+                <span className="media-type-card__icon-row">
+                  <span className="media-type-card__icon" style={maskStyle(imageSquareIcon)} />
+                  <span className="media-type-card__icon" style={maskStyle(videoCameraIcon)} />
+                </span>
+                <span className="media-type-card__label">Ambos</span>
               </button>
             </div>
           </div>
