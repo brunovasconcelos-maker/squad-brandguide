@@ -24,6 +24,15 @@ export function toggleMultiFilter(selected, key) {
   return selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key];
 }
 
+export function isDefaultFilters(filters) {
+  return (
+    filters.mediaType === "ambos" &&
+    filters.characters.length === 0 &&
+    filters.formats.length === 0 &&
+    filters.types.length === 0
+  );
+}
+
 // Buckets a natural width/height into one of the three named format filters.
 // Real photos rarely land exactly on 1:1 or 16:9, so this classifies by
 // which side dominates rather than requiring an exact ratio match.
