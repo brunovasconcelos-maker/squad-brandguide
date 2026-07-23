@@ -54,7 +54,10 @@ export default function Lightbox({ image, onClose }) {
 
         <p className="lightbox__title">{image.title}</p>
 
-        <div className="lightbox__image-wrap">
+        <div
+          className="lightbox__image-wrap"
+          style={naturalSize ? { aspectRatio: `${naturalSize.width} / ${naturalSize.height}` } : undefined}
+        >
           <img
             className="lightbox__image"
             src={image.src}
