@@ -1165,7 +1165,7 @@ body {
   object-fit: cover;
 }
 
-/* Personagens variant: square transparent-PNG cards, per Figma (node 24:902) */
+/* Square-card variant: Personagens (node 24:902) and Assets (node 31:1122) */
 
 .image-grid--square {
   gap: 20px;
@@ -1178,6 +1178,10 @@ body {
 
 .image-grid__cell--square img {
   object-fit: contain;
+}
+
+.image-grid__cell--assets {
+  background: #f6f6f6;
 }
 
 .image-grid__cell-overlay {
