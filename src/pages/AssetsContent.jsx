@@ -6,7 +6,7 @@ export default function AssetsContent() {
   return (
     <div className="page__content">
       <GridHeader count={images.length} />
-      <ImageGrid images={images} aspect="1:1" cardVariant="assets" />
+      <ImageGrid images={images} aspect="1:1" />
     </div>
   );
 }

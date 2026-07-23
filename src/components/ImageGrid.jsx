@@ -2,17 +2,11 @@ import { useState } from "react";
 import Lightbox from "./Lightbox";
 import downloadIcon from "../../assets/icons/download.svg";
 
-export default function ImageGrid({ images, aspect = "16:9", cardVariant }) {
+export default function ImageGrid({ images, aspect = "16:9" }) {
   const [openImage, setOpenImage] = useState(null);
   const isSquare = aspect === "1:1";
 
-  const cellClassName = [
-    "image-grid__cell",
-    isSquare && "image-grid__cell--square",
-    cardVariant && `image-grid__cell--${cardVariant}`,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const cellClassName = isSquare ? "image-grid__cell image-grid__cell--square" : "image-grid__cell";
 
   return (
     <div className={isSquare ? "image-grid image-grid--square" : "image-grid"}>
