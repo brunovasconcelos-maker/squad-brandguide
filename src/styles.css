@@ -1398,15 +1398,11 @@ body {
 
 .image-grid__cell--square {
   aspect-ratio: 1 / 1;
-  border: 1px solid #ebebeb;
+  border: 1px solid #767676;
 }
 
 .image-grid__cell--square img {
   object-fit: contain;
-}
-
-.image-grid__cell--assets {
-  background: #f6f6f6;
 }
 
 .image-grid__cell-overlay {
