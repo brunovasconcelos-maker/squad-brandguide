@@ -8,7 +8,7 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Lightbox({ image, images, onClose, onNavigate }) {
+export default function Lightbox({ image, images, onClose, onNavigate, tagsVariant = "full" }) {
   const [naturalSize, setNaturalSize] = useState(null);
 
   const currentIndex = images.findIndex((img) => img.filename === image.filename);
@@ -99,10 +99,20 @@ export default function Lightbox({ image, images, onClose, onNavigate }) {
 
         <div className="lightbox__footer">
           <div className="lightbox__tags">
-            <span className="lightbox-tag">{image.extension.toUpperCase()}</span>
-            <span className="lightbox-tag">{type}</span>
-            <span className="lightbox-tag">{capitalize(image.character)}</span>
-            {aspectRatio && <span className="lightbox-tag">{aspectRatio}</span>}
+            {tagsVariant === "characters" ? (
+              (image.characters ?? [image.character]).map((character) => (
+                <span className="lightbox-tag" key={character}>
+                  {capitalize(character)}
+                </span>
+              ))
+            ) : (
+              <>
+                <span className="lightbox-tag">{image.extension.toUpperCase()}</span>
+                <span className="lightbox-tag">{type}</span>
+                <span className="lightbox-tag">{capitalize(image.character)}</span>
+                {aspectRatio && <span className="lightbox-tag">{aspectRatio}</span>}
+              </>
+            )}
           </div>
           <a
             className="lightbox__download"
