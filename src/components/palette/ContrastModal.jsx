@@ -108,6 +108,13 @@ function ContrastBadgeRow({ ratio, thresholds }) {
   return (
     <div className="contrast-modal__badges">
       {["AA", "AAA"].map((grade) => {
+        if (ratio == null) {
+          return (
+            <span key={grade} className="contrast-modal__badge contrast-modal__badge--placeholder">
+              {grade}
+            </span>
+          );
+        }
         const pass = ratio >= thresholds[grade];
         return (
           <span
@@ -236,18 +243,19 @@ export default function ContrastModal({ onClose }) {
             />
           </div>
 
-          {bgColor && textColor && (
-            <div className="contrast-modal__preview" style={{ backgroundColor: bgColor.hex, color: textColor.hex }}>
-              <div className="contrast-modal__preview-row">
-                <p className="contrast-modal__preview-large">Large Text</p>
-                <ContrastBadgeRow ratio={ratio} thresholds={WCAG_THRESHOLDS.large} />
-              </div>
-              <div className="contrast-modal__preview-row contrast-modal__preview-row--normal">
-                <p className="contrast-modal__preview-normal">Normal Text</p>
-                <ContrastBadgeRow ratio={ratio} thresholds={WCAG_THRESHOLDS.normal} />
-              </div>
+          <div
+            className={`contrast-modal__preview${bgColor && textColor ? "" : " contrast-modal__preview--empty"}`}
+            style={bgColor && textColor ? { backgroundColor: bgColor.hex, color: textColor.hex } : undefined}
+          >
+            <div className="contrast-modal__preview-row">
+              <p className="contrast-modal__preview-large">Large Text</p>
+              <ContrastBadgeRow ratio={ratio} thresholds={WCAG_THRESHOLDS.large} />
             </div>
-          )}
+            <div className="contrast-modal__preview-row contrast-modal__preview-row--normal">
+              <p className="contrast-modal__preview-normal">Normal Text</p>
+              <ContrastBadgeRow ratio={ratio} thresholds={WCAG_THRESHOLDS.normal} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
