@@ -50,6 +50,13 @@ export function matchesExactCharacters(imageCharacters, selected) {
   return selected.every((character) => imageCharacters.includes(character));
 }
 
+// True when selected is empty, or the single image character is one of the
+// selected characters (OR match) — unlike matchesExactCharacters, this is for
+// images that belong to exactly one character rather than a character set.
+export function matchesAnyCharacter(character, selected) {
+  return selected.length === 0 || selected.includes(character);
+}
+
 export function matchesFilters(image, dimensions, filters) {
   const isVideo = isVideoExtension(image.extension);
   if (filters.mediaType === "imagem" && isVideo) return false;

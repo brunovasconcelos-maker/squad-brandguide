@@ -1,10 +1,10 @@
-import { CHARACTERS, toggleMultiFilter } from "../../utils/imageFilters";
-import wazAvatar from "../../../assets/images/avatares/waz_avatar.png";
-import makyAvatar from "../../../assets/images/avatares/maky_avatar.png";
-import finAvatar from "../../../assets/images/avatares/fin_avatar.png";
-import pipoAvatar from "../../../assets/images/avatares/pipo_avatar.png";
-import juriAvatar from "../../../assets/images/avatares/juri_avatar.png";
-import opyAvatar from "../../../assets/images/avatares/opy_avatar.png";
+import { CHARACTERS, toggleMultiFilter } from "../utils/imageFilters";
+import wazAvatar from "../../assets/images/avatares/waz_avatar.png";
+import makyAvatar from "../../assets/images/avatares/maky_avatar.png";
+import finAvatar from "../../assets/images/avatares/fin_avatar.png";
+import pipoAvatar from "../../assets/images/avatares/pipo_avatar.png";
+import juriAvatar from "../../assets/images/avatares/juri_avatar.png";
+import opyAvatar from "../../assets/images/avatares/opy_avatar.png";
 
 const AVATARS = {
   waz: wazAvatar,
@@ -19,7 +19,7 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function GradientesHeader({ count, selected, onSelectedChange }) {
+export default function CharacterFilterHeader({ count, selected, onSelectedChange }) {
   return (
     <div className="images-header">
       <div className="gradientes-pills">
