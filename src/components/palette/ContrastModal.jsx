@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CHARACTERS } from "../../utils/imageFilters";
 import { getCharacter } from "../../data/colorPalette";
 import { contrastRatio, WCAG_THRESHOLDS } from "../../utils/contrast";
@@ -48,12 +49,34 @@ function Dropdown({
   renderOption,
 }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const [position, setPosition] = useState(null);
+  const triggerRef = useRef(null);
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    function updatePosition() {
+      if (!triggerRef.current) return;
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPosition({ top: rect.bottom + 4, left: rect.left, width: rect.width });
+    }
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!open) return undefined;
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) setOpen(false);
+      const insideTrigger = triggerRef.current && triggerRef.current.contains(event.target);
+      const insideList = listRef.current && listRef.current.contains(event.target);
+      if (!insideTrigger && !insideList) setOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -66,7 +89,7 @@ function Dropdown({
   return (
     <div className="contrast-modal__field">
       <p className="contrast-modal__field-label">{label}</p>
-      <div className="contrast-dropdown" ref={ref}>
+      <div className="contrast-dropdown" ref={triggerRef}>
         <button
           type="button"
           className="contrast-dropdown__trigger"
@@ -81,24 +104,32 @@ function Dropdown({
           <span className="contrast-dropdown__caret" style={maskStyle(caretDownIcon)} />
           {value && <span className="contrast-dropdown__swatch">{renderTriggerSwatch(value)}</span>}
         </button>
-        {open && !disabled && (
-          <ul className="contrast-dropdown__list">
-            {options.map((option) => (
-              <li key={getOptionKey(option)}>
-                <button
-                  type="button"
-                  className="contrast-dropdown__option"
-                  onClick={() => {
-                    onSelect(option);
-                    setOpen(false);
-                  }}
-                >
-                  {renderOption(option)}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        {open &&
+          !disabled &&
+          position &&
+          createPortal(
+            <ul
+              className="contrast-dropdown__list"
+              ref={listRef}
+              style={{ top: position.top, left: position.left, width: position.width }}
+            >
+              {options.map((option) => (
+                <li key={getOptionKey(option)}>
+                  <button
+                    type="button"
+                    className="contrast-dropdown__option"
+                    onClick={() => {
+                      onSelect(option);
+                      setOpen(false);
+                    }}
+                  >
+                    {renderOption(option)}
+                  </button>
+                </li>
+              ))}
+            </ul>,
+            document.body
+          )}
       </div>
     </div>
   );
