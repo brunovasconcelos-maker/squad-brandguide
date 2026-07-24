@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import HomeMenuOverlay from "../components/HomeMenuOverlay";
+import FallingElements from "../components/FallingElements";
 import arrowRight from "../../assets/icons/ArrowRight.svg";
 import { pages } from "../pageConfig";
 
@@ -10,6 +11,7 @@ export default function Home() {
 
   return (
     <div className="home">
+      <FallingElements />
       <Nav onMenuClick={() => setMenuOpen(true)} />
 
       <Link className="cta" to={pages[0].path}>

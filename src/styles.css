@@ -144,6 +144,42 @@ body {
   transform: translateX(4px);
 }
 
+/* Falling elements (Home) */
+
+.falling-elements {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.falling-elements__item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  cursor: grab;
+  touch-action: none;
+}
+
+.falling-elements__item:active {
+  cursor: grabbing;
+}
+
+.falling-elements__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+
+.falling-elements__item:hover .falling-elements__img {
+  transform: scale(1.08);
+}
+
 /* Page title */
 
 .page__title {
