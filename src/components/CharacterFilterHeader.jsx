@@ -5,6 +5,7 @@ import finAvatar from "../../assets/images/avatares/fin_avatar.png";
 import pipoAvatar from "../../assets/images/avatares/pipo_avatar.png";
 import juriAvatar from "../../assets/images/avatares/juri_avatar.png";
 import opyAvatar from "../../assets/images/avatares/opy_avatar.png";
+import clearIcon from "../../assets/icons/X.svg";
 
 const AVATARS = {
   waz: wazAvatar,
@@ -19,7 +20,13 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function CharacterFilterHeader({ count, selected, onSelectedChange }) {
+export default function CharacterFilterHeader({
+  count,
+  selected,
+  onSelectedChange,
+  selectedCount = 0,
+  onClearSelection,
+}) {
   return (
     <div className="images-header">
       <div className="gradientes-pills">
@@ -41,6 +48,16 @@ export default function CharacterFilterHeader({ count, selected, onSelectedChang
             {capitalize(key)}
           </button>
         ))}
+
+        {selectedCount > 0 && (
+          <button className="ver-contraste" type="button" onClick={onClearSelection}>
+            <span
+              className="ver-contraste__icon ver-contraste__icon--mask"
+              style={{ maskImage: `url(${clearIcon})`, WebkitMaskImage: `url(${clearIcon})` }}
+            />
+            Cancelar Seleção
+          </button>
+        )}
       </div>
       <p className="images-header__count">Mostrando: {count} resultados</p>
     </div>
