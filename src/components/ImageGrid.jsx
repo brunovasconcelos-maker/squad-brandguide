@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import JSZip from "jszip";
 import Lightbox from "./Lightbox";
 import downloadIcon from "../../assets/icons/download.svg";
@@ -24,35 +24,10 @@ async function downloadSelectedAsZip(selectedImages) {
   URL.revokeObjectURL(url);
 }
 
-export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full" }) {
+export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full", selected, onToggleSelect }) {
   const [openImage, setOpenImage] = useState(null);
-  const [selected, setSelected] = useState(() => new Set());
   const [zipping, setZipping] = useState(false);
   const isSquare = aspect === "1:1";
-
-  // Keeps selection in sync with whatever's currently visible (e.g. a
-  // character filter change can drop previously-selected items).
-  useEffect(() => {
-    setSelected((prev) => {
-      const visible = new Set(images.map((image) => image.filename));
-      let changed = false;
-      const next = new Set();
-      prev.forEach((filename) => {
-        if (visible.has(filename)) next.add(filename);
-        else changed = true;
-      });
-      return changed ? next : prev;
-    });
-  }, [images]);
-
-  function toggleSelected(filename) {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(filename)) next.delete(filename);
-      else next.add(filename);
-      return next;
-    });
-  }
 
   async function handleBulkDownload() {
     const selectedImages = images.filter((image) => selected.has(image.filename));
@@ -114,7 +89,7 @@ export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full
               aria-pressed={isSelected}
               onClick={(event) => {
                 event.stopPropagation();
-                toggleSelected(image.filename);
+                onToggleSelect(image.filename);
               }}
             >
               {isSelected ? (
