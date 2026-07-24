@@ -8,11 +8,12 @@ import { pages } from "../pageConfig";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [fallingKey, setFallingKey] = useState(0);
 
   return (
     <div className="home">
-      <FallingElements />
-      <Nav onMenuClick={() => setMenuOpen(true)} />
+      <FallingElements key={fallingKey} />
+      <Nav onMenuClick={() => setMenuOpen(true)} onLogoClick={() => setFallingKey((key) => key + 1)} />
 
       <Link className="cta" to={pages[0].path}>
         <span className="cta__inner">
