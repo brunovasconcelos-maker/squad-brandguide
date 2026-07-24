@@ -1,7 +1,7 @@
 // WCAG 2.x relative luminance + contrast ratio, computed client-side per the
 // standard formulas (no external API): https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
 
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const value = hex.replace("#", "");
   return {
     r: parseInt(value.slice(0, 2), 16),
