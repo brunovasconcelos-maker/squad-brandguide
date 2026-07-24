@@ -28,7 +28,7 @@ export default function GradientesHeader({ count, selected, onSelectedChange }) 
           className={`filter-pill${selected.length === 0 ? " filter-pill--selected" : ""}`}
           onClick={() => onSelectedChange([])}
         >
-          Todos: Squad
+          Todos
         </button>
         {CHARACTERS.map((key) => (
           <button
