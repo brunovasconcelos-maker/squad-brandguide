@@ -2157,12 +2157,12 @@ body {
   display: block;
 }
 
+/* Portaled to document.body and positioned via inline top/left/width (see
+   ContrastModal.jsx) so it floats above the modal instead of being clipped
+   by, or forcing scroll on, the modal's own overflow container. */
 .contrast-dropdown__list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  z-index: 5;
+  position: fixed;
+  z-index: 60;
   margin: 0;
   padding: 4px;
   list-style: none;
