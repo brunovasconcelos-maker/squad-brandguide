@@ -1,6 +1,10 @@
+import { useState } from "react";
 import contrastIcon from "../../../assets/icons/Contrast.svg";
+import ContrastModal from "./ContrastModal";
 
 export default function Acessibilidade() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="text-section">
       <p className="text-section__heading">Acessibilidade</p>
@@ -21,13 +25,15 @@ export default function Acessibilidade() {
         </p>
       </div>
       <div className="ver-contraste-wrap">
-        <button className="ver-contraste" type="button">
+        <button className="ver-contraste" type="button" onClick={() => setModalOpen(true)}>
           <span className="ver-contraste__icon">
             <img src={contrastIcon} alt="" />
           </span>
           Ver contraste
         </button>
       </div>
+
+      {modalOpen && <ContrastModal onClose={() => setModalOpen(false)} />}
     </div>
   );
 }
