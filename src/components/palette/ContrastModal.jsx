@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 import { CHARACTERS } from "../../utils/imageFilters";
 import { getCharacter } from "../../data/colorPalette";
 import { contrastRatio, WCAG_THRESHOLDS } from "../../utils/contrast";
-import caretDownIcon from "../../../assets/icons/CaretDown.svg";
 import checkIcon from "../../../assets/icons/Check.svg";
 import warningIcon from "../../../assets/icons/Warning.svg";
 import wazAvatar from "../../../assets/images/avatares/waz_avatar.png";
@@ -12,6 +10,7 @@ import finAvatar from "../../../assets/images/avatares/fin_avatar.png";
 import pipoAvatar from "../../../assets/images/avatares/pipo_avatar.png";
 import juriAvatar from "../../../assets/images/avatares/juri_avatar.png";
 import opyAvatar from "../../../assets/images/avatares/opy_avatar.png";
+import Dropdown from "../Dropdown";
 
 const AVATARS = {
   waz: wazAvatar,
@@ -31,109 +30,6 @@ const CHARACTER_OPTIONS = CHARACTERS.map((key) => ({
   label: capitalize(key),
   avatar: AVATARS[key],
 }));
-
-function maskStyle(icon) {
-  return { maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` };
-}
-
-function Dropdown({
-  label,
-  placeholder,
-  value,
-  options,
-  disabled,
-  getOptionKey,
-  onSelect,
-  renderTriggerLabel,
-  renderTriggerSwatch,
-  renderOption,
-}) {
-  const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState(null);
-  const triggerRef = useRef(null);
-  const listRef = useRef(null);
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    function updatePosition() {
-      if (!triggerRef.current) return;
-      const rect = triggerRef.current.getBoundingClientRect();
-      setPosition({ top: rect.bottom + 4, left: rect.left, width: rect.width });
-    }
-
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-    function handleClickOutside(event) {
-      const insideTrigger = triggerRef.current && triggerRef.current.contains(event.target);
-      const insideList = listRef.current && listRef.current.contains(event.target);
-      if (!insideTrigger && !insideList) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open]);
-
-  useEffect(() => {
-    if (disabled) setOpen(false);
-  }, [disabled]);
-
-  return (
-    <div className="contrast-modal__field">
-      <p className="contrast-modal__field-label">{label}</p>
-      <div className="contrast-dropdown" ref={triggerRef}>
-        <button
-          type="button"
-          className="contrast-dropdown__trigger"
-          onClick={() => setOpen((prev) => !prev)}
-          disabled={disabled}
-        >
-          <span
-            className={`contrast-dropdown__value${value ? "" : " contrast-dropdown__value--placeholder"}`}
-          >
-            {value ? renderTriggerLabel(value) : placeholder}
-          </span>
-          <span className="contrast-dropdown__caret" style={maskStyle(caretDownIcon)} />
-          {value && <span className="contrast-dropdown__swatch">{renderTriggerSwatch(value)}</span>}
-        </button>
-        {open &&
-          !disabled &&
-          position &&
-          createPortal(
-            <ul
-              className="contrast-dropdown__list"
-              ref={listRef}
-              style={{ top: position.top, left: position.left, width: position.width }}
-            >
-              {options.map((option) => (
-                <li key={getOptionKey(option)}>
-                  <button
-                    type="button"
-                    className="contrast-dropdown__option"
-                    onClick={() => {
-                      onSelect(option);
-                      setOpen(false);
-                    }}
-                  >
-                    {renderOption(option)}
-                  </button>
-                </li>
-              ))}
-            </ul>,
-            document.body
-          )}
-      </div>
-    </div>
-  );
-}
 
 function ContrastBadgeRow({ ratio, thresholds }) {
   return (
@@ -213,65 +109,71 @@ export default function ContrastModal({ onClose }) {
         </div>
 
         <div className="contrast-modal__body">
-          <Dropdown
-            label="Selecione o personagem:"
-            placeholder="Selecione um personagem"
-            value={characterOption}
-            options={CHARACTER_OPTIONS}
-            getOptionKey={(option) => option.key}
-            onSelect={handleCharacterSelect}
-            renderTriggerLabel={(option) => option.label}
-            renderTriggerSwatch={(option) => <img src={option.avatar} alt="" />}
-            renderOption={(option) => (
-              <>
-                <span className="contrast-dropdown__option-swatch">
-                  <img src={option.avatar} alt="" />
-                </span>
-                {option.label}
-              </>
-            )}
-          />
+          <div className="contrast-modal__field">
+            <p className="contrast-modal__field-label">Selecione o personagem:</p>
+            <Dropdown
+              placeholder="Selecione um personagem"
+              value={characterOption}
+              options={CHARACTER_OPTIONS}
+              getOptionKey={(option) => option.key}
+              onSelect={handleCharacterSelect}
+              renderTriggerLabel={(option) => option.label}
+              renderTriggerSwatch={(option) => <img src={option.avatar} alt="" />}
+              renderOption={(option) => (
+                <>
+                  <span className="dropdown__option-swatch">
+                    <img src={option.avatar} alt="" />
+                  </span>
+                  {option.label}
+                </>
+              )}
+            />
+          </div>
 
           <div className="contrast-modal__row">
-            <Dropdown
-              label="Selecione a cor de fundo:"
-              placeholder="Selecione uma cor"
-              value={bgColor}
-              options={characterData ? characterData.scale : []}
-              disabled={!characterData}
-              getOptionKey={(option) => option.step}
-              onSelect={(option) => setBgStep(option.step)}
-              renderTriggerLabel={(option) => `${option.step} | ${option.hex}`}
-              renderTriggerSwatch={(option) => (
-                <span style={{ backgroundColor: option.hex, width: "100%", height: "100%", display: "block" }} />
-              )}
-              renderOption={(option) => (
-                <>
-                  <span className="contrast-dropdown__option-swatch" style={{ backgroundColor: option.hex }} />
-                  {option.step} | {option.hex}
-                </>
-              )}
-            />
+            <div className="contrast-modal__field">
+              <p className="contrast-modal__field-label">Selecione a cor de fundo:</p>
+              <Dropdown
+                placeholder="Selecione uma cor"
+                value={bgColor}
+                options={characterData ? characterData.scale : []}
+                disabled={!characterData}
+                getOptionKey={(option) => option.step}
+                onSelect={(option) => setBgStep(option.step)}
+                renderTriggerLabel={(option) => `${option.step} | ${option.hex}`}
+                renderTriggerSwatch={(option) => (
+                  <span style={{ backgroundColor: option.hex, width: "100%", height: "100%", display: "block" }} />
+                )}
+                renderOption={(option) => (
+                  <>
+                    <span className="dropdown__option-swatch" style={{ backgroundColor: option.hex }} />
+                    {option.step} | {option.hex}
+                  </>
+                )}
+              />
+            </div>
 
-            <Dropdown
-              label="Selecione a cor de texto:"
-              placeholder="Selecione uma cor"
-              value={textColor}
-              options={characterData ? characterData.scale : []}
-              disabled={!characterData}
-              getOptionKey={(option) => option.step}
-              onSelect={(option) => setTextStep(option.step)}
-              renderTriggerLabel={(option) => `${option.step} | ${option.hex}`}
-              renderTriggerSwatch={(option) => (
-                <span style={{ backgroundColor: option.hex, width: "100%", height: "100%", display: "block" }} />
-              )}
-              renderOption={(option) => (
-                <>
-                  <span className="contrast-dropdown__option-swatch" style={{ backgroundColor: option.hex }} />
-                  {option.step} | {option.hex}
-                </>
-              )}
-            />
+            <div className="contrast-modal__field">
+              <p className="contrast-modal__field-label">Selecione a cor de texto:</p>
+              <Dropdown
+                placeholder="Selecione uma cor"
+                value={textColor}
+                options={characterData ? characterData.scale : []}
+                disabled={!characterData}
+                getOptionKey={(option) => option.step}
+                onSelect={(option) => setTextStep(option.step)}
+                renderTriggerLabel={(option) => `${option.step} | ${option.hex}`}
+                renderTriggerSwatch={(option) => (
+                  <span style={{ backgroundColor: option.hex, width: "100%", height: "100%", display: "block" }} />
+                )}
+                renderOption={(option) => (
+                  <>
+                    <span className="dropdown__option-swatch" style={{ backgroundColor: option.hex }} />
+                    {option.step} | {option.hex}
+                  </>
+                )}
+              />
+            </div>
           </div>
 
           <div
