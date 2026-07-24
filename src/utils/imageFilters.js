@@ -42,6 +42,14 @@ export function classifyFormat(width, height) {
   return ratio > 1 ? "horizontal" : "vertical";
 }
 
+// True only when imageCharacters and selected contain exactly the same
+// characters (order-independent) — not a superset or subset match.
+export function matchesExactCharacters(imageCharacters, selected) {
+  if (selected.length === 0) return true;
+  if (imageCharacters.length !== selected.length) return false;
+  return selected.every((character) => imageCharacters.includes(character));
+}
+
 export function matchesFilters(image, dimensions, filters) {
   const isVideo = isVideoExtension(image.extension);
   if (filters.mediaType === "imagem" && isVideo) return false;

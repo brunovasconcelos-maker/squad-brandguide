@@ -3,13 +3,12 @@ import GradientesHeader from "../components/gradientes/GradientesHeader";
 import AddGradientButton from "../components/gradientes/AddGradientButton";
 import ImageGrid from "../components/ImageGrid";
 import { images } from "../data/gradientes";
+import { matchesExactCharacters } from "../utils/imageFilters";
 
 export default function GradientesContent() {
   const [selected, setSelected] = useState([]);
 
-  const filteredImages = images.filter(
-    (image) => selected.length === 0 || selected.every((character) => image.characters.includes(character))
-  );
+  const filteredImages = images.filter((image) => matchesExactCharacters(image.characters, selected));
 
   return (
     <div className="page__content">
