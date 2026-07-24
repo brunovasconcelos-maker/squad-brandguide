@@ -8,19 +8,6 @@ const MAX_BODIES = 18;
 const MAX_BODIES_SMALL_VIEWPORT = 10;
 const SMALL_VIEWPORT_WIDTH = 640;
 
-const MAX_DISPLAY_SIZE = 170;
-const MIN_DISPLAY_SIZE = 70;
-
-// Per-element size multipliers, applied on top of the base clamped display
-// size above. Matched against the filename without its extension.
-const ASSET_UI_PATTERN = /^Asset-UI(-[2-5])?$/;
-
-function getSizeMultiplier(filename) {
-  if (filename === "Logo-White") return 4;
-  if (ASSET_UI_PATTERN.test(filename)) return 2;
-  return 1.5;
-}
-
 function shuffle(list) {
   const copy = [...list];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -30,28 +17,14 @@ function shuffle(list) {
   return copy;
 }
 
-function computeDisplaySize(naturalWidth, naturalHeight, multiplier = 1) {
-  const longest = Math.max(naturalWidth, naturalHeight);
-  let scale = 1;
-  if (longest > MAX_DISPLAY_SIZE) scale = MAX_DISPLAY_SIZE / longest;
-  else if (longest < MIN_DISPLAY_SIZE) scale = MIN_DISPLAY_SIZE / longest;
-  scale *= multiplier;
-  return { width: naturalWidth * scale, height: naturalHeight * scale };
-}
-
-// Keeps oversized elements (e.g. Logo-White at 4x) from exceeding the
-// viewport itself on narrow screens, which would otherwise wedge a body
-// between both walls at once and break the physics.
-function fitToViewport(width, height, maxWidth, maxHeight) {
-  const scale = Math.min(1, maxWidth / width, maxHeight / height);
-  return { width: width * scale, height: height * scale };
-}
+// Fallback size if an image fails to load, so a body isn't created with zero area.
+const FALLBACK_SIZE = 100;
 
 function loadImageSize(src) {
   return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
-    img.onerror = () => resolve({ width: MIN_DISPLAY_SIZE, height: MIN_DISPLAY_SIZE });
+    img.onerror = () => resolve({ width: FALLBACK_SIZE, height: FALLBACK_SIZE });
     img.src = src;
   });
 }
@@ -97,9 +70,7 @@ export default function FallingElements() {
       });
 
       const bodies = elements.map((element, index) => {
-        const multiplier = getSizeMultiplier(element.filename);
-        const rawSize = computeDisplaySize(sizes[index].width, sizes[index].height, multiplier);
-        const { width: w, height: h } = fitToViewport(rawSize.width, rawSize.height, width - wallThickness, height - wallThickness);
+        const { width: w, height: h } = sizes[index];
         const node = nodeRefs.current[element.filename];
         if (node) {
           node.style.width = `${w}px`;
