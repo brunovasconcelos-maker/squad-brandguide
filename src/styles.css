@@ -1576,13 +1576,93 @@ body {
   -webkit-mask-size: contain;
 }
 
+.image-grid__cell-checkbox {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.image-grid__cell-checkbox svg {
+  width: 20px;
+  height: 20px;
+}
+
+.image-grid__cell--selected {
+  outline: 2px solid var(--color-white);
+  outline-offset: -2px;
+}
+
+.image-grid__cell--selected .image-grid__cell-checkbox {
+  opacity: 1;
+}
+
 .image-grid__cell:hover .image-grid__cell-overlay,
 .image-grid__cell:focus-within .image-grid__cell-overlay,
 .image-grid__cell:hover .image-grid__cell-title,
 .image-grid__cell:focus-within .image-grid__cell-title,
 .image-grid__cell:hover .image-grid__cell-download,
-.image-grid__cell:focus-within .image-grid__cell-download {
+.image-grid__cell:focus-within .image-grid__cell-download,
+.image-grid__cell:hover .image-grid__cell-checkbox,
+.image-grid__cell:focus-within .image-grid__cell-checkbox {
   opacity: 1;
+}
+
+/* In selection mode, only the checkbox shows on hover — the per-card
+   download icon steps aside for the bulk download button instead. Higher
+   specificity than the base hover rule above so it wins regardless of
+   stylesheet order. */
+.image-grid--selecting .image-grid__cell:hover .image-grid__cell-download,
+.image-grid--selecting .image-grid__cell:focus-within .image-grid__cell-download {
+  opacity: 0;
+}
+
+.image-grid__bulk-download {
+  position: fixed;
+  z-index: 20;
+  right: 40px;
+  bottom: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 8px 16px 8px 8px;
+  border: none;
+  border-radius: 360px;
+  background: var(--color-white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  color: var(--color-black);
+  white-space: nowrap;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.image-grid__bulk-download:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.image-grid__bulk-download svg {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1730px) {
@@ -1603,6 +1683,16 @@ body {
     width: 20px;
     height: 20px;
   }
+
+  .image-grid__cell-checkbox {
+    width: 32px;
+    height: 32px;
+  }
+
+  .image-grid__cell-checkbox svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1622,6 +1712,20 @@ body {
   .image-grid__cell-download-icon {
     width: 16px;
     height: 16px;
+  }
+
+  .image-grid__cell-checkbox {
+    width: 28px;
+    height: 28px;
+  }
+
+  .image-grid__cell-checkbox svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .image-grid__bulk-download {
+    right: 20px;
   }
 }
 
