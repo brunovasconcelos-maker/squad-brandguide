@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ImagesHeader from "../components/imagens-videos/ImagesHeader";
+import ImagesHeader from "../components/ImagesHeader";
 import ImageGrid from "../components/ImageGrid";
 import { images } from "../data/imagensVideos";
 import { createDefaultFilters, matchesFilters } from "../utils/imageFilters";

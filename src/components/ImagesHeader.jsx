@@ -1,10 +1,10 @@
 import { useState } from "react";
-import filterIcon from "../../../assets/icons/filter.svg";
-import clearIcon from "../../../assets/icons/X.svg";
+import filterIcon from "../../assets/icons/filter.svg";
+import clearIcon from "../../assets/icons/X.svg";
 import FilterPanel from "./FilterPanel";
-import { buildFilterLabel, createDefaultFilters, isDefaultFilters } from "../../utils/imageFilters";
+import { buildFilterLabel, createDefaultFilters, isDefaultFilters } from "../utils/imageFilters";
 
-export default function ImagesHeader({ count, filters, onApply }) {
+export default function ImagesHeader({ count, filters, onApply, showFormato = true }) {
   const [panelOpen, setPanelOpen] = useState(false);
 
   return (
@@ -27,6 +27,7 @@ export default function ImagesHeader({ count, filters, onApply }) {
                 onApply(newFilters);
                 setPanelOpen(false);
               }}
+              showFormato={showFormato}
             />
           )}
         </div>

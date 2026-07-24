@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../../utils/imageFilters";
-import imageSquareIcon from "../../../assets/icons/ImageSquare.svg";
-import imageSquareFillIcon from "../../../assets/icons/ImageSquare-1.svg";
-import videoCameraIcon from "../../../assets/icons/VideoCamera.svg";
-import videoCameraFillIcon from "../../../assets/icons/VideoCamera-1.svg";
+import { CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../utils/imageFilters";
+import imageSquareIcon from "../../assets/icons/ImageSquare.svg";
+import imageSquareFillIcon from "../../assets/icons/ImageSquare-1.svg";
+import videoCameraIcon from "../../assets/icons/VideoCamera.svg";
+import videoCameraFillIcon from "../../assets/icons/VideoCamera-1.svg";
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -13,7 +13,7 @@ function maskStyle(icon) {
   return { maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` };
 }
 
-export default function FilterPanel({ appliedFilters, onCancel, onSave }) {
+export default function FilterPanel({ appliedFilters, onCancel, onSave, showFormato = true }) {
   const [draft, setDraft] = useState(appliedFilters);
 
   useEffect(() => {
@@ -112,30 +112,32 @@ export default function FilterPanel({ appliedFilters, onCancel, onSave }) {
             </div>
           </div>
 
-          <div className="filter-group">
-            <p className="filter-group__label">Formato:</p>
-            <div className="filter-group__pills">
-              <button
-                type="button"
-                className={`filter-pill${draft.formats.length === 0 ? " filter-pill--selected" : ""}`}
-                onClick={() => setDraft((d) => ({ ...d, formats: [] }))}
-              >
-                Todos
-              </button>
-              {FORMATS.map((format) => (
+          {showFormato && (
+            <div className="filter-group">
+              <p className="filter-group__label">Formato:</p>
+              <div className="filter-group__pills">
                 <button
-                  key={format.key}
                   type="button"
-                  className={`filter-pill${draft.formats.includes(format.key) ? " filter-pill--selected" : ""}`}
-                  onClick={() =>
-                    setDraft((d) => ({ ...d, formats: toggleMultiFilter(d.formats, format.key) }))
-                  }
+                  className={`filter-pill${draft.formats.length === 0 ? " filter-pill--selected" : ""}`}
+                  onClick={() => setDraft((d) => ({ ...d, formats: [] }))}
                 >
-                  {format.label}
+                  Todos
                 </button>
-              ))}
+                {FORMATS.map((format) => (
+                  <button
+                    key={format.key}
+                    type="button"
+                    className={`filter-pill${draft.formats.includes(format.key) ? " filter-pill--selected" : ""}`}
+                    onClick={() =>
+                      setDraft((d) => ({ ...d, formats: toggleMultiFilter(d.formats, format.key) }))
+                    }
+                  >
+                    {format.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="filter-group">
             <p className="filter-group__label">Tipo:</p>
