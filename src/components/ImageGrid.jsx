@@ -2,7 +2,7 @@ import { useState } from "react";
 import Lightbox from "./Lightbox";
 import downloadIcon from "../../assets/icons/download.svg";
 
-export default function ImageGrid({ images, aspect = "16:9" }) {
+export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full" }) {
   const [openImage, setOpenImage] = useState(null);
   const isSquare = aspect === "1:1";
 
@@ -48,6 +48,7 @@ export default function ImageGrid({ images, aspect = "16:9" }) {
           images={images}
           onClose={() => setOpenImage(null)}
           onNavigate={setOpenImage}
+          tagsVariant={tagsVariant}
         />
       )}
     </div>
