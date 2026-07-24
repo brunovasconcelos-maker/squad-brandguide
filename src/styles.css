@@ -2218,9 +2218,18 @@ body {
   flex-direction: column;
   gap: 24px;
   padding: 32px;
+  border: 1px solid transparent;
   border-radius: 8px;
   font-family: "Inter", sans-serif;
   font-weight: 500;
+}
+
+/* Reserves the exact footprint of the filled preview so the modal doesn't
+   resize/scroll as the user makes selections. */
+.contrast-modal__preview--empty {
+  background: var(--color-bg);
+  border-color: #525b5b;
+  color: #767676;
 }
 
 .contrast-modal__preview-row {
@@ -2273,6 +2282,12 @@ body {
 
 .contrast-modal__badge--fail {
   background: #f26c37;
+}
+
+.contrast-modal__badge--placeholder {
+  background: transparent;
+  border: 1px solid #525b5b;
+  color: #767676;
 }
 
 .contrast-modal__badge img {
