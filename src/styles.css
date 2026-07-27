@@ -209,22 +209,6 @@ body {
   white-space: nowrap;
 }
 
-/* Paleta de Cores: letter-by-letter title entrance (test page only) */
-
-.page__title__letter {
-  display: inline-block;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
-}
-
-@starting-style {
-  .page__title__letter {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-
 /* Bottom nav */
 
 .bottom-nav {
@@ -2920,7 +2904,6 @@ body {
   .menu-overlay__item,
   .home-menu-overlay-backdrop,
   .home-menu-overlay,
-  .page__title__letter,
   .reveal,
   .reveal--visible {
     transition: none !important;
@@ -2938,8 +2921,7 @@ body {
     .menu-overlay,
     .menu-overlay__item,
     .home-menu-overlay-backdrop,
-    .home-menu-overlay,
-    .page__title__letter {
+    .home-menu-overlay {
       opacity: 1;
       transform: none;
     }
