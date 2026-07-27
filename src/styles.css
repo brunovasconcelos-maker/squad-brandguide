@@ -267,6 +267,28 @@ body {
 
 /* Menu overlay */
 
+.menu-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 29;
+  background: rgba(43, 43, 43, 0.6);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@starting-style {
+  .menu-overlay-backdrop {
+    opacity: 0;
+  }
+}
+
+.menu-overlay-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-in);
+}
+
 .menu-overlay {
   position: fixed;
   z-index: 30;
@@ -278,21 +300,22 @@ body {
   border-radius: 16px;
   overflow: hidden;
   opacity: 1;
-  transform: translateX(0);
-  transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+  transform: scale(1);
+  transform-origin: top right;
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
 }
 
 @starting-style {
   .menu-overlay {
     opacity: 0;
-    transform: translateX(24px);
+    transform: scale(0.4);
   }
 }
 
 .menu-overlay.is-closing {
   opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 250ms var(--ease-in), transform 250ms var(--ease-in);
+  transform: scale(0.4);
+  transition: opacity 240ms var(--ease-in), transform 240ms var(--ease-in);
 }
 
 .menu-overlay__exit {
@@ -346,7 +369,15 @@ body {
   text-decoration: none;
   white-space: nowrap;
   opacity: 1;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(0);
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+@starting-style {
+  .menu-overlay__item {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 .menu-overlay__list:hover .menu-overlay__item {
@@ -360,6 +391,28 @@ body {
 
 /* Homepage menu overlay */
 
+.home-menu-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 29;
+  background: rgba(43, 43, 43, 0.6);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@starting-style {
+  .home-menu-overlay-backdrop {
+    opacity: 0;
+  }
+}
+
+.home-menu-overlay-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-in);
+}
+
 .home-menu-overlay {
   position: fixed;
   z-index: 30;
@@ -371,21 +424,22 @@ body {
   border-radius: 16px;
   overflow: hidden;
   opacity: 1;
-  transform: translateX(0);
-  transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+  transform: scale(1);
+  transform-origin: top right;
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
 }
 
 @starting-style {
   .home-menu-overlay {
     opacity: 0;
-    transform: translateX(24px);
+    transform: scale(0.4);
   }
 }
 
 .home-menu-overlay.is-closing {
   opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 250ms var(--ease-in), transform 250ms var(--ease-in);
+  transform: scale(0.4);
+  transition: opacity 240ms var(--ease-in), transform 240ms var(--ease-in);
 }
 
 .home-menu-overlay__close {
@@ -2817,7 +2871,10 @@ body {
   .gradient-modal__panel,
   .filter-panel-backdrop,
   .filter-panel,
+  .menu-overlay-backdrop,
   .menu-overlay,
+  .menu-overlay__item,
+  .home-menu-overlay-backdrop,
   .home-menu-overlay {
     transition: none !important;
   }
@@ -2830,7 +2887,10 @@ body {
     .gradient-modal__panel,
     .filter-panel-backdrop,
     .filter-panel,
+    .menu-overlay-backdrop,
     .menu-overlay,
+    .menu-overlay__item,
+    .home-menu-overlay-backdrop,
     .home-menu-overlay {
       opacity: 1;
       transform: none;
