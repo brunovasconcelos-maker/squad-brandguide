@@ -1,8 +1,12 @@
+import { useRef } from "react";
 import ContrastBadge from "./ContrastBadge";
 import CopyableColor from "./CopyableColor";
 import { characters, getPrimarySwatch } from "../../data/colorPalette";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
+import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
+const STAGGER_STEP = 25;
 
 function chunk(arr, size) {
   const out = [];
@@ -10,42 +14,52 @@ function chunk(arr, size) {
   return out;
 }
 
+function PrimaryColorsRowGroup({ row, skipReveal }) {
+  const ref = useRef(null);
+  const visible = useRevealOnScroll(ref, { skip: skipReveal });
+
+  return (
+    <div className="primary-colors__row" ref={ref}>
+      {row.map((character, index) => {
+        const primary = getPrimarySwatch(character);
+        return (
+          <CopyableColor
+            key={character.name}
+            hex={primary.hex}
+            className={`primary-color-card${visible ? " reveal--visible" : " reveal"}`}
+            style={{ backgroundColor: primary.hex, transitionDelay: `${index * STAGGER_STEP}ms` }}
+          >
+            <div className="primary-color-card__badges">
+              {primary.badges.map((badge) => (
+                <ContrastBadge key={badge.color} color={badge.color} grade={badge.grade} />
+              ))}
+            </div>
+            <div className="primary-color-card__info">
+              <p className="primary-color-card__name">
+                {character.name}: {character.primaryStep}
+              </p>
+              <div className="primary-color-card__values">
+                <p>{primary.hex}</p>
+                <p>{character.primaryRgb}</p>
+                <p>{character.primaryHsl}</p>
+              </div>
+            </div>
+          </CopyableColor>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function PrimaryColorsRow() {
   const ordered = ORDER.map((name) => characters.find((c) => c.name === name));
   const rows = chunk(ordered, 3);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <div className="primary-colors">
       {rows.map((row, i) => (
-        <div className="primary-colors__row" key={i}>
-          {row.map((character) => {
-            const primary = getPrimarySwatch(character);
-            return (
-              <CopyableColor
-                key={character.name}
-                hex={primary.hex}
-                className="primary-color-card"
-                style={{ backgroundColor: primary.hex }}
-              >
-                <div className="primary-color-card__badges">
-                  {primary.badges.map((badge) => (
-                    <ContrastBadge key={badge.color} color={badge.color} grade={badge.grade} />
-                  ))}
-                </div>
-                <div className="primary-color-card__info">
-                  <p className="primary-color-card__name">
-                    {character.name}: {character.primaryStep}
-                  </p>
-                  <div className="primary-color-card__values">
-                    <p>{primary.hex}</p>
-                    <p>{character.primaryRgb}</p>
-                    <p>{character.primaryHsl}</p>
-                  </div>
-                </div>
-              </CopyableColor>
-            );
-          })}
-        </div>
+        <PrimaryColorsRowGroup key={i} row={row} skipReveal={prefersReducedMotion} />
       ))}
     </div>
   );
