@@ -8,12 +8,11 @@ import { useRevealOnScroll } from "./useRevealOnScroll";
 const waz = getCharacter("Waz");
 const step = (n) => waz.scale.find((s) => s.step === n).hex;
 
-// Half the size of the main 6-card groups, so its entrance is tuned to
-// roughly half the pace too: half the per-card transition duration (110ms
-// vs. 220ms) and half the stagger step (20ms vs. 40ms), giving a 3-card
-// row's entrance ~0.15s end to end.
-const ITEM_DURATION = 110;
-const STAGGER_STEP = 20;
+// Smaller than the main 6-card groups (0.3s/row), so this stays noticeably
+// quicker, but 110ms/20ms read as too fast on their own — 150ms duration
+// and a 25ms stagger step give a 3-card row's entrance ~0.2s end to end.
+const ITEM_DURATION = 150;
+const STAGGER_STEP = 25;
 
 const EXAMPLES = [
   {
