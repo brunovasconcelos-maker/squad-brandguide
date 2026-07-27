@@ -7,9 +7,11 @@ import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
 const ROW_SIZE = 3;
-// Spaced so a 3-card row's entrance (stagger + each card's own 220ms
-// transition) takes ~1s end to end.
-const STAGGER_STEP = 390;
+// These cards are the ones visible on page load, so their entrance is
+// tuned faster than the scroll-revealed color-scale rows below: spaced so
+// a 3-card row's entrance (stagger + each card's own 220ms transition)
+// takes ~0.5s end to end.
+const STAGGER_STEP = 140;
 
 function chunk(arr, size) {
   const out = [];
