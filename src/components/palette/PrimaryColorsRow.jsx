@@ -7,8 +7,8 @@ import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
 // 3 cards per row; spaced so the row's entrance (stagger + each card's own
-// 220ms transition) takes ~1.5s end to end.
-const STAGGER_STEP = 640;
+// 220ms transition) takes ~1s end to end.
+const STAGGER_STEP = 390;
 
 function chunk(arr, size) {
   const out = [];

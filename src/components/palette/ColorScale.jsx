@@ -7,8 +7,8 @@ import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
 // 10 swatches per row; spaced so the row's entrance (stagger + each
-// swatch's own 220ms transition) takes ~1.5s end to end.
-const STAGGER_STEP = 142;
+// swatch's own 220ms transition) takes ~1s end to end.
+const STAGGER_STEP = 87;
 
 function ColorScaleRow({ character, skipReveal }) {
   const ref = useRef(null);
