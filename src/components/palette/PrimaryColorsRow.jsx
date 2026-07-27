@@ -10,8 +10,8 @@ const ROW_SIZE = 3;
 // These cards are the ones visible on page load, so their entrance is
 // tuned faster than the scroll-revealed color-scale rows below: spaced so
 // a 3-card row's entrance (stagger + each card's own 220ms transition)
-// takes ~0.5s end to end.
-const STAGGER_STEP = 140;
+// takes ~0.3s end to end.
+const STAGGER_STEP = 40;
 
 function chunk(arr, size) {
   const out = [];
