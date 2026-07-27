@@ -573,6 +573,25 @@ body {
   transform: translateY(0);
 }
 
+/* Same recipe as .reveal/.reveal--visible above, but as a single class that
+   stays applied throughout (with --visible added, never swapped in place of
+   it) so the transition declaration is still present in the "after" style
+   when the visible state flips — a class swap where the base class (and
+   its `transition`) disappears entirely leaves nothing for the browser to
+   animate from, so the change applies instantly instead of interpolating.
+   Kept separate from .reveal/.reveal--visible (used by the Logo page) so
+   fixing this doesn't change that page's behavior. */
+.color-frame-reveal {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+.color-frame-reveal.color-frame-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .primary-color-card {
   position: relative;
   flex: 1 1 0;
@@ -2905,7 +2924,9 @@ body {
   .home-menu-overlay-backdrop,
   .home-menu-overlay,
   .reveal,
-  .reveal--visible {
+  .reveal--visible,
+  .color-frame-reveal,
+  .color-frame-reveal--visible {
     transition: none !important;
   }
 
@@ -2927,7 +2948,8 @@ body {
     }
   }
 
-  .reveal {
+  .reveal,
+  .color-frame-reveal {
     opacity: 1;
     transform: none;
   }
