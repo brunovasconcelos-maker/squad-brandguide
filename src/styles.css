@@ -583,7 +583,7 @@ body {
    fixing this doesn't change that page's behavior. */
 .color-frame-reveal {
   opacity: 0;
-  transform: translateY(-12px);
+  transform: translateY(-32px);
   transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
 }
 
