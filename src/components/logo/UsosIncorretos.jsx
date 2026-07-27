@@ -1,8 +1,19 @@
+import { useRef } from "react";
 import logoBlack from "../../../assets/logo/logo-black.svg";
 import usoIncorretoImg from "../../../assets/images/uso-incorreto.png";
 import FailBadge from "./FailBadge";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
+import { useRevealOnScroll } from "./useRevealOnScroll";
+
+const STAGGER_STEP = 25;
 
 export default function UsosIncorretos() {
+  const ref = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
+  const revealClass = visible ? "reveal--visible" : "reveal";
+  const delay = (index) => ({ transitionDelay: `${index * STAGGER_STEP}ms` });
+
   return (
     <>
       <div className="text-section">
@@ -20,7 +31,7 @@ export default function UsosIncorretos() {
           </p>
         </div>
       </div>
-      <div className="logo-grid logo-grid--incorrect">
+      <div className="logo-grid logo-grid--incorrect" ref={ref}>
         <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
           <defs>
             <filter id="logo-outline-filter">
@@ -31,7 +42,7 @@ export default function UsosIncorretos() {
             </filter>
           </defs>
         </svg>
-        <div className="logo-grid__card logo-grid__card--white">
+        <div className={`logo-grid__card logo-grid__card--white ${revealClass}`} style={delay(0)}>
           <FailBadge />
           <img
             className="logo-grid__logo logo-grid__logo--primary usos-incorretos__logo--outline"
@@ -39,7 +50,7 @@ export default function UsosIncorretos() {
             alt="Logo em versão outline (uso incorreto)"
           />
         </div>
-        <div className="logo-grid__card logo-grid__card--white">
+        <div className={`logo-grid__card logo-grid__card--white ${revealClass}`} style={delay(1)}>
           <FailBadge />
           <img
             className="logo-grid__logo logo-grid__logo--primary usos-incorretos__logo--rotated"
@@ -47,7 +58,7 @@ export default function UsosIncorretos() {
             alt="Logo rotacionada (uso incorreto)"
           />
         </div>
-        <div className="logo-grid__card logo-grid__card--white">
+        <div className={`logo-grid__card logo-grid__card--white ${revealClass}`} style={delay(2)}>
           <FailBadge />
           <img
             className="logo-grid__card-bg"
@@ -55,7 +66,7 @@ export default function UsosIncorretos() {
             alt="Logo com o .com desalinhado em relação ao squad (uso incorreto)"
           />
         </div>
-        <div className="logo-grid__card logo-grid__card--white">
+        <div className={`logo-grid__card logo-grid__card--white ${revealClass}`} style={delay(3)}>
           <FailBadge />
           <div className="usos-incorretos__crop">
             <img
