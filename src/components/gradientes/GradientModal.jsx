@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Dropdown from "../Dropdown";
 import { gradientColors } from "../../data/gradientColors";
 import { renderMeshGradient, exportMeshGradientPng } from "../../utils/meshGradient";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 
+const EXIT_DURATION = 220;
 const MIN_SIZE = 180;
 const MAX_SIZE = 1600;
 const MAX_COLORS = 6;
@@ -64,18 +66,30 @@ export default function GradientModal({ onClose }) {
   const [height, setHeight] = useState(DEFAULT_HEIGHT);
   const [fittedSize, setFittedSize] = useState({ width: 0, height: 0 });
   const [downloading, setDownloading] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const previewWrapRef = useRef(null);
   const frameRef = useRef(null);
   const canvasRef = useRef(null);
 
+  function requestClose() {
+    if (isClosing) return;
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+    setIsClosing(true);
+    window.setTimeout(onClose, EXIT_DURATION);
+  }
+
   useEffect(() => {
     function handleKeyDown(event) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") requestClose();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  });
 
   // Fits the W:H aspect ratio within the available preview area (a
   // "contain" fit), recomputed whenever that area resizes — including when
@@ -183,9 +197,9 @@ export default function GradientModal({ onClose }) {
   const hasColors = slots.some((slot) => slot.hex);
 
   return (
-    <div className="gradient-modal-backdrop" onClick={onClose}>
-      <div className="gradient-modal__panel" onClick={(event) => event.stopPropagation()}>
-        <button className="lightbox__close" type="button" aria-label="Fechar" onClick={onClose}>
+    <div className={`gradient-modal-backdrop${isClosing ? " is-closing" : ""}`} onClick={requestClose}>
+      <div className={`gradient-modal__panel${isClosing ? " is-closing" : ""}`} onClick={(event) => event.stopPropagation()}>
+        <button className="lightbox__close" type="button" aria-label="Fechar" onClick={requestClose}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>

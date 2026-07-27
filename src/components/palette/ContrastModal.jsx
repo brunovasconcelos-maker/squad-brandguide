@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { CHARACTERS } from "../../utils/imageFilters";
 import { getCharacter } from "../../data/colorPalette";
 import { contrastRatio, WCAG_THRESHOLDS } from "../../utils/contrast";
@@ -30,6 +31,8 @@ const CHARACTER_OPTIONS = CHARACTERS.map((key) => ({
   label: capitalize(key),
   avatar: AVATARS[key],
 }));
+
+const EXIT_DURATION = 220;
 
 function ContrastBadgeRow({ ratio, thresholds }) {
   return (
@@ -70,14 +73,26 @@ export default function ContrastModal({ onClose }) {
   const [character, setCharacter] = useState(null);
   const [bgStep, setBgStep] = useState(null);
   const [textStep, setTextStep] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  function requestClose() {
+    if (isClosing) return;
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+    setIsClosing(true);
+    window.setTimeout(onClose, EXIT_DURATION);
+  }
 
   useEffect(() => {
     function handleKeyDown(event) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") requestClose();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  });
 
   const characterOption = character ? CHARACTER_OPTIONS.find((o) => o.key === character) : null;
   const characterData = character ? getCharacter(capitalize(character)) : null;
@@ -92,9 +107,9 @@ export default function ContrastModal({ onClose }) {
   }
 
   return (
-    <div className="lightbox" onClick={onClose}>
-      <div className="contrast-modal__panel" onClick={(event) => event.stopPropagation()}>
-        <button className="lightbox__close" type="button" aria-label="Fechar" onClick={onClose}>
+    <div className={`lightbox${isClosing ? " is-closing" : ""}`} onClick={requestClose}>
+      <div className={`contrast-modal__panel${isClosing ? " is-closing" : ""}`} onClick={(event) => event.stopPropagation()}>
+        <button className="lightbox__close" type="button" aria-label="Fechar" onClick={requestClose}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>

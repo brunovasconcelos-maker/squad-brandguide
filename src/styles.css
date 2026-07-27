@@ -2,6 +2,8 @@
   --color-bg: #1d1d1d;
   --color-white: #ffffff;
   --color-black: #000000;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 * {
@@ -275,6 +277,22 @@ body {
   background: var(--color-white);
   border-radius: 16px;
   overflow: hidden;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+}
+
+@starting-style {
+  .menu-overlay {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+.menu-overlay.is-closing {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 250ms var(--ease-in), transform 250ms var(--ease-in);
 }
 
 .menu-overlay__exit {
@@ -352,6 +370,22 @@ body {
   background: var(--color-white);
   border-radius: 16px;
   overflow: hidden;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+}
+
+@starting-style {
+  .home-menu-overlay {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+.home-menu-overlay.is-closing {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 250ms var(--ease-in), transform 250ms var(--ease-in);
 }
 
 .home-menu-overlay__close {
@@ -1277,6 +1311,19 @@ body {
   background: rgba(43, 43, 43, 0.6);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@starting-style {
+  .filter-panel-backdrop {
+    opacity: 0;
+  }
+}
+
+.filter-panel-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-in);
 }
 
 .filter-panel {
@@ -1294,6 +1341,22 @@ body {
   background: var(--color-bg);
   border-radius: 16px 0 0 16px;
   box-sizing: border-box;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+}
+
+@starting-style {
+  .filter-panel {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+.filter-panel.is-closing {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 250ms var(--ease-in), transform 250ms var(--ease-in);
 }
 
 .filter-panel__header {
@@ -1744,6 +1807,19 @@ body {
   padding: 40px 20px;
   background: rgba(0, 0, 0, 0.7);
   overflow-y: auto;
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@starting-style {
+  .lightbox {
+    opacity: 0;
+  }
+}
+
+.lightbox.is-closing {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-in);
 }
 
 .lightbox__panel {
@@ -1760,6 +1836,22 @@ body {
   background: var(--color-bg);
   box-sizing: border-box;
   overflow-y: auto;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+@starting-style {
+  .lightbox__panel {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.lightbox__panel.is-closing {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 220ms var(--ease-in), transform 220ms var(--ease-in);
 }
 
 .lightbox__close {
@@ -2135,6 +2227,22 @@ body {
   background: var(--color-bg);
   box-sizing: border-box;
   overflow-y: auto;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+@starting-style {
+  .contrast-modal__panel {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.contrast-modal__panel.is-closing {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 220ms var(--ease-in), transform 220ms var(--ease-in);
 }
 
 .contrast-modal__header {
@@ -2457,6 +2565,19 @@ body {
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
   overflow-y: auto;
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@starting-style {
+  .gradient-modal-backdrop {
+    opacity: 0;
+  }
+}
+
+.gradient-modal-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-in);
 }
 
 .gradient-modal__panel {
@@ -2473,6 +2594,22 @@ body {
   background: var(--color-bg);
   box-sizing: border-box;
   overflow-y: auto;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+@starting-style {
+  .gradient-modal__panel {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.gradient-modal__panel.is-closing {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 220ms var(--ease-in), transform 220ms var(--ease-in);
 }
 
 .gradient-modal__title {
@@ -2667,4 +2804,36 @@ body {
 
 .gradient-modal__handle:active {
   cursor: grabbing;
+}
+
+/* Reduced motion: collapse every enter/exit transition added above to an
+   instant change, and skip the @starting-style entrance state entirely so
+   there's nothing to animate from. */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox__panel,
+  .contrast-modal__panel,
+  .gradient-modal-backdrop,
+  .gradient-modal__panel,
+  .filter-panel-backdrop,
+  .filter-panel,
+  .menu-overlay,
+  .home-menu-overlay {
+    transition: none !important;
+  }
+
+  @starting-style {
+    .lightbox,
+    .lightbox__panel,
+    .contrast-modal__panel,
+    .gradient-modal-backdrop,
+    .gradient-modal__panel,
+    .filter-panel-backdrop,
+    .filter-panel,
+    .menu-overlay,
+    .home-menu-overlay {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
