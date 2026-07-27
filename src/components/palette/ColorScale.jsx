@@ -23,7 +23,7 @@ function ColorScaleRow({ character, skipReveal }) {
           return (
             <div
               key={swatch.step}
-              className={`color-swatch${visible ? " reveal--visible" : " reveal"}`}
+              className={`color-swatch color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`}
               style={{ transitionDelay: `${index * STAGGER_STEP}ms` }}
             >
               <CopyableColor

@@ -6,8 +6,9 @@ import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
-// 3 cards per row; spaced so the row's entrance (stagger + each card's own
-// 220ms transition) takes ~1s end to end.
+const ROW_SIZE = 3;
+// Spaced so a 3-card row's entrance (stagger + each card's own 220ms
+// transition) takes ~1s end to end.
 const STAGGER_STEP = 390;
 
 function chunk(arr, size) {
@@ -16,52 +17,50 @@ function chunk(arr, size) {
   return out;
 }
 
-function PrimaryColorsRowGroup({ row, skipReveal }) {
-  const ref = useRef(null);
-  const visible = useRevealOnScroll(ref, { skip: skipReveal });
-
-  return (
-    <div className="primary-colors__row" ref={ref}>
-      {row.map((character, index) => {
-        const primary = getPrimarySwatch(character);
-        return (
-          <CopyableColor
-            key={character.name}
-            hex={primary.hex}
-            className={`primary-color-card${visible ? " reveal--visible" : " reveal"}`}
-            style={{ backgroundColor: primary.hex, transitionDelay: `${index * STAGGER_STEP}ms` }}
-          >
-            <div className="primary-color-card__badges">
-              {primary.badges.map((badge) => (
-                <ContrastBadge key={badge.color} color={badge.color} grade={badge.grade} />
-              ))}
-            </div>
-            <div className="primary-color-card__info">
-              <p className="primary-color-card__name">
-                {character.name}: {character.primaryStep}
-              </p>
-              <div className="primary-color-card__values">
-                <p>{primary.hex}</p>
-                <p>{character.primaryRgb}</p>
-                <p>{character.primaryHsl}</p>
-              </div>
-            </div>
-          </CopyableColor>
-        );
-      })}
-    </div>
-  );
-}
-
 export default function PrimaryColorsRow() {
   const ordered = ORDER.map((name) => characters.find((c) => c.name === name));
-  const rows = chunk(ordered, 3);
+  const rows = chunk(ordered, ROW_SIZE);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const ref = useRef(null);
+  // Observed as a single unit (not per row) so the stagger index is a flat
+  // count across every card — row 1 finishes (left to right) before row 2
+  // starts, instead of each row restarting its own 0-2 index and animating
+  // in sync with the other row's matching column.
+  const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
 
   return (
-    <div className="primary-colors">
-      {rows.map((row, i) => (
-        <PrimaryColorsRowGroup key={i} row={row} skipReveal={prefersReducedMotion} />
+    <div className="primary-colors" ref={ref}>
+      {rows.map((row, rowIndex) => (
+        <div className="primary-colors__row" key={rowIndex}>
+          {row.map((character, colIndex) => {
+            const primary = getPrimarySwatch(character);
+            const flatIndex = rowIndex * ROW_SIZE + colIndex;
+            return (
+              <CopyableColor
+                key={character.name}
+                hex={primary.hex}
+                className={`primary-color-card color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`}
+                style={{ backgroundColor: primary.hex, transitionDelay: `${flatIndex * STAGGER_STEP}ms` }}
+              >
+                <div className="primary-color-card__badges">
+                  {primary.badges.map((badge) => (
+                    <ContrastBadge key={badge.color} color={badge.color} grade={badge.grade} />
+                  ))}
+                </div>
+                <div className="primary-color-card__info">
+                  <p className="primary-color-card__name">
+                    {character.name}: {character.primaryStep}
+                  </p>
+                  <div className="primary-color-card__values">
+                    <p>{primary.hex}</p>
+                    <p>{character.primaryRgb}</p>
+                    <p>{character.primaryHsl}</p>
+                  </div>
+                </div>
+              </CopyableColor>
+            );
+          })}
+        </div>
       ))}
     </div>
   );
