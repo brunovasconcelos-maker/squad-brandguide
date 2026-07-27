@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../utils/imageFilters";
+import { usePrefersReducedMotion } from "../utils/useReducedMotion";
 import imageSquareIcon from "../../assets/icons/ImageSquare.svg";
 import imageSquareFillIcon from "../../assets/icons/ImageSquare-1.svg";
 import videoCameraIcon from "../../assets/icons/VideoCamera.svg";
 import videoCameraFillIcon from "../../assets/icons/VideoCamera-1.svg";
+
+const EXIT_DURATION = 250;
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -15,26 +18,38 @@ function maskStyle(icon) {
 
 export default function FilterPanel({ appliedFilters, onCancel, onSave, showFormato = true }) {
   const [draft, setDraft] = useState(appliedFilters);
+  const [isClosing, setIsClosing] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  function requestClose() {
+    if (isClosing) return;
+    if (prefersReducedMotion) {
+      onCancel();
+      return;
+    }
+    setIsClosing(true);
+    window.setTimeout(onCancel, EXIT_DURATION);
+  }
 
   useEffect(() => {
     function handleKeyDown(event) {
-      if (event.key === "Escape") onCancel();
+      if (event.key === "Escape") requestClose();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onCancel]);
+  });
 
   return (
     <>
-      <div className="filter-panel-backdrop" onClick={onCancel} />
-      <div className="filter-panel">
+      <div className={`filter-panel-backdrop${isClosing ? " is-closing" : ""}`} onClick={requestClose} />
+      <div className={`filter-panel${isClosing ? " is-closing" : ""}`}>
         <div className="filter-panel__header">
           <p className="filter-panel__title">Filtros</p>
           <button
             className="filter-panel__close"
             type="button"
             aria-label="Fechar filtros"
-            onClick={onCancel}
+            onClick={requestClose}
           >
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -164,7 +179,7 @@ export default function FilterPanel({ appliedFilters, onCancel, onSave, showForm
         </div>
 
         <div className="filter-panel__footer">
-          <button className="filter-panel__cancel" type="button" onClick={onCancel}>
+          <button className="filter-panel__cancel" type="button" onClick={requestClose}>
             Cancelar
           </button>
           <button className="filter-panel__save" type="button" onClick={() => onSave(draft)}>

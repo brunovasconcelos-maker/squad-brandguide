@@ -1,15 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import minusIcon from "../../assets/icons/Minus.svg";
 import { pages } from "../pageConfig";
+import { usePrefersReducedMotion } from "../utils/useReducedMotion";
+
+const EXIT_DURATION = 250;
 
 export default function HomeMenuOverlay({ onClose }) {
+  const [isClosing, setIsClosing] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  function requestClose() {
+    if (isClosing) return;
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+    setIsClosing(true);
+    window.setTimeout(onClose, EXIT_DURATION);
+  }
+
   return (
-    <div className="home-menu-overlay">
+    <div className={`home-menu-overlay${isClosing ? " is-closing" : ""}`}>
       <button
         className="home-menu-overlay__close"
         type="button"
         aria-label="Fechar menu"
-        onClick={onClose}
+        onClick={requestClose}
       >
         <img src={minusIcon} alt="" />
       </button>

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { computeAspectRatio } from "../utils/aspectRatio";
 import { isVideoExtension } from "../utils/mediaType";
+import { usePrefersReducedMotion } from "../utils/useReducedMotion";
 import caretLeft from "../../assets/icons/CaretLeft.svg";
 import caretRight from "../../assets/icons/CaretRight.svg";
+
+const EXIT_DURATION = 220;
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -10,6 +13,8 @@ function capitalize(word) {
 
 export default function Lightbox({ image, images, onClose, onNavigate, tagsVariant = "full" }) {
   const [naturalSize, setNaturalSize] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const currentIndex = images.findIndex((img) => img.filename === image.filename);
   const hasPrev = currentIndex > 0;
@@ -17,13 +22,23 @@ export default function Lightbox({ image, images, onClose, onNavigate, tagsVaria
   const goPrev = () => hasPrev && onNavigate(images[currentIndex - 1]);
   const goNext = () => hasNext && onNavigate(images[currentIndex + 1]);
 
+  function requestClose() {
+    if (isClosing) return;
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+    setIsClosing(true);
+    window.setTimeout(onClose, EXIT_DURATION);
+  }
+
   useEffect(() => {
     setNaturalSize(null);
   }, [image.filename]);
 
   useEffect(() => {
     function handleKeyDown(event) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") requestClose();
       if (event.key === "ArrowLeft") goPrev();
       if (event.key === "ArrowRight") goNext();
     }
@@ -43,7 +58,7 @@ export default function Lightbox({ image, images, onClose, onNavigate, tagsVaria
   const type = isVideoExtension(image.extension) ? "Vídeo" : "Imagem";
 
   return (
-    <div className="lightbox" onClick={onClose}>
+    <div className={`lightbox${isClosing ? " is-closing" : ""}`} onClick={requestClose}>
       {hasPrev && (
         <button
           className="lightbox__nav lightbox__nav--prev"
@@ -61,12 +76,12 @@ export default function Lightbox({ image, images, onClose, onNavigate, tagsVaria
         </button>
       )}
 
-      <div className="lightbox__panel" onClick={(event) => event.stopPropagation()}>
+      <div className={`lightbox__panel${isClosing ? " is-closing" : ""}`} onClick={(event) => event.stopPropagation()}>
         <button
           className="lightbox__close"
           type="button"
           aria-label="Fechar"
-          onClick={onClose}
+          onClick={requestClose}
         >
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
