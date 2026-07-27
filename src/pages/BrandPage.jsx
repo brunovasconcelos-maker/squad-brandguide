@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import BottomNav from "../components/BottomNav";
 import MenuOverlay from "../components/MenuOverlay";
 import Footer from "../components/Footer";
+import AnimatedPageTitle from "../components/palette/AnimatedPageTitle";
 import { pages } from "../pageConfig";
 
 export default function BrandPage({ title, children }) {
@@ -19,7 +20,11 @@ export default function BrandPage({ title, children }) {
   return (
     <div className="page">
       <Nav onMenuClick={() => setMenuOpen(true)} logoTo={pages[0].path} />
-      <h1 className="page__title">{title}</h1>
+      {location.pathname === "/paleta-de-cores" ? (
+        <AnimatedPageTitle text={title} />
+      ) : (
+        <h1 className="page__title">{title}</h1>
+      )}
       {children}
       <Footer />
       <BottomNav />
