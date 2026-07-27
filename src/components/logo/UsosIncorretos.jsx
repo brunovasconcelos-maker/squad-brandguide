@@ -5,13 +5,17 @@ import FailBadge from "./FailBadge";
 import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
-const STAGGER_STEP = 25;
+// 4 cards (2x2), between the color palette page's 3-card (~0.2s/row) and
+// 6-card (~0.3s/row) reference groups in size, so its row entrance is
+// tuned proportionally in between: a 2-item row's entrance (stagger +
+// each card's own 220ms transition) takes ~0.25s end to end.
+const STAGGER_STEP = 30;
 
 export default function UsosIncorretos() {
   const ref = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
-  const revealClass = visible ? "reveal--visible" : "reveal";
+  const revealClass = `color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`;
   const delay = (index) => ({ transitionDelay: `${index * STAGGER_STEP}ms` });
 
   return (

@@ -1,6 +1,13 @@
+import { useRef } from "react";
 import clearspaceImg from "../../../assets/images/clearspace.png";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
+import { useRevealOnScroll } from "./useRevealOnScroll";
 
 export default function Clearspace() {
+  const ref = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
+
   return (
     <>
       <div className="text-section">
@@ -15,7 +22,10 @@ export default function Clearspace() {
           </p>
         </div>
       </div>
-      <div className="clearspace-panel">
+      <div
+        className={`clearspace-panel color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`}
+        ref={ref}
+      >
         <img
           className="clearspace-panel__image"
           src={clearspaceImg}
