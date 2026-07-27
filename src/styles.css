@@ -673,6 +673,11 @@ body {
   font-size: 16px;
   color: var(--color-white);
   letter-spacing: -0.23px;
+  transition: background-color 150ms ease;
+}
+
+.ver-contraste:hover {
+  background-color: #3d3d3d;
 }
 
 .ver-contraste__icon {
@@ -1336,6 +1341,11 @@ body {
   cursor: pointer;
   white-space: nowrap;
   box-sizing: border-box;
+  transition: background-color 150ms ease;
+}
+
+.character-pill:hover:not(.character-pill--selected) {
+  background-color: #3d3d3d;
 }
 
 .character-pill--selected {
@@ -1559,6 +1569,11 @@ body {
   cursor: pointer;
   white-space: nowrap;
   box-sizing: border-box;
+  transition: background-color 150ms ease;
+}
+
+.filter-pill:hover:not(.filter-pill--selected) {
+  background-color: #3d3d3d;
 }
 
 .filter-pill--selected {
