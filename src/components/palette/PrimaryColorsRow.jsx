@@ -6,7 +6,9 @@ import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
-const STAGGER_STEP = 25;
+// 3 cards per row; spaced so the row's entrance (stagger + each card's own
+// 220ms transition) takes ~1.5s end to end.
+const STAGGER_STEP = 640;
 
 function chunk(arr, size) {
   const out = [];
