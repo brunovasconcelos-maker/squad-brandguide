@@ -3,7 +3,6 @@ import ImagesHeader from "../components/ImagesHeader";
 import ImageGrid from "../components/ImageGrid";
 import { images } from "../data/imagensVideos";
 import { createDefaultFilters, matchesFilters } from "../utils/imageFilters";
-import { useImageSelection } from "../utils/useImageSelection";
 
 export default function ImagensVideosContent() {
   const [filters, setFilters] = useState(createDefaultFilters());
@@ -28,19 +27,10 @@ export default function ImagensVideosContent() {
     matchesFilters(image, dimensions[image.filename], filters)
   );
 
-  const { selected: imageSelection, toggle: toggleImageSelection, clear: clearImageSelection } =
-    useImageSelection(filteredImages);
-
   return (
     <div className="page__content">
-      <ImagesHeader
-        count={filteredImages.length}
-        filters={filters}
-        onApply={setFilters}
-        selectedCount={imageSelection.size}
-        onClearSelection={clearImageSelection}
-      />
-      <ImageGrid images={filteredImages} selected={imageSelection} onToggleSelect={toggleImageSelection} />
+      <ImagesHeader count={filteredImages.length} filters={filters} onApply={setFilters} />
+      <ImageGrid images={filteredImages} pageSlug="imagens-e-videos" />
     </div>
   );
 }
