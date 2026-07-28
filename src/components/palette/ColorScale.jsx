@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ContrastBadge from "./ContrastBadge";
 import CopyableColor from "./CopyableColor";
 import { characters } from "../../data/colorPalette";
@@ -9,10 +9,36 @@ const ORDER = ["Maky", "Waz", "Fin", "Pipo", "Juri", "Opy"];
 // 10 swatches per row; spaced so the row's entrance (stagger + each
 // swatch's own 220ms transition) takes ~1s end to end.
 const STAGGER_STEP = 87;
+// Matches .color-frame-reveal's transition duration in styles.css — used to
+// know when a given swatch's own entrance animation has actually finished,
+// so its hover/copy-hex interaction doesn't wake up while it's still moving.
+const REVEAL_DURATION = 220;
 
 function ColorScaleRow({ character, skipReveal }) {
   const ref = useRef(null);
   const visible = useRevealOnScroll(ref, { skip: skipReveal });
+  // Per-swatch gate for hover/copy-hex: each index flips true independently,
+  // timed to that swatch's own delay + transition duration, instead of all
+  // swatches in the row becoming interactive together the instant it's visible.
+  const [settled, setSettled] = useState(() => character.scale.map(() => skipReveal));
+
+  useEffect(() => {
+    if (!visible) return undefined;
+    if (skipReveal) {
+      setSettled(character.scale.map(() => true));
+      return undefined;
+    }
+    const timers = character.scale.map((_, index) =>
+      setTimeout(() => {
+        setSettled((prev) => {
+          const next = [...prev];
+          next[index] = true;
+          return next;
+        });
+      }, index * STAGGER_STEP + REVEAL_DURATION)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [visible, skipReveal, character.scale]);
 
   return (
     <div className="color-scale-row" ref={ref}>
@@ -28,6 +54,7 @@ function ColorScaleRow({ character, skipReveal }) {
             >
               <CopyableColor
                 hex={swatch.hex}
+                interactive={settled[index]}
                 className="color-swatch__block"
                 style={{ backgroundColor: swatch.hex }}
               >

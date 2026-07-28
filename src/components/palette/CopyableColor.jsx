@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-export default function CopyableColor({ hex, className, style, children }) {
+export default function CopyableColor({ hex, className, style, children, interactive = true }) {
   const [tooltipPos, setTooltipPos] = useState(null);
   const [copied, setCopied] = useState(false);
 
   function handleMouseMove(e) {
+    if (!interactive) return;
     setTooltipPos({ x: e.clientX, y: e.clientY });
   }
 
@@ -14,6 +15,7 @@ export default function CopyableColor({ hex, className, style, children }) {
   }
 
   async function handleClick() {
+    if (!interactive) return;
     try {
       await navigator.clipboard.writeText(hex);
       setCopied(true);
@@ -26,7 +28,7 @@ export default function CopyableColor({ hex, className, style, children }) {
   return (
     <div
       className={className}
-      style={{ ...style, cursor: "pointer" }}
+      style={{ ...style, cursor: interactive ? "pointer" : "default" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
