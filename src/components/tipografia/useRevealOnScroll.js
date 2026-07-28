@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-// Marks a group "visible" the first time it enters the viewport — already
-// in view at mount (initial load) fires almost immediately; below the fold
-// waits for the user to actually scroll it into view. Fires once, then
-// disconnects, so scrolling back past it doesn't replay the reveal.
+// Marks a group "visible" once ~80% of it is within the viewport — already
+// satisfying that at mount (initial load) fires almost immediately; below
+// the fold waits for the user to scroll it most of the way into view.
+// Fires once, then disconnects, so scrolling back past it doesn't replay
+// the reveal.
 export function useRevealOnScroll(ref, { skip = false } = {}) {
   const [visible, setVisible] = useState(skip);
 
@@ -34,7 +35,7 @@ export function useRevealOnScroll(ref, { skip = false } = {}) {
           });
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.8 }
     );
     observer.observe(el);
     return () => {
