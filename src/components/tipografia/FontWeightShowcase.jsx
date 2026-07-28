@@ -1,4 +1,7 @@
+import { useRef } from "react";
 import TypeCaption from "./TypeCaption";
+import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
+import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const WEIGHTS = [
   { label: "Extra light", weight: 200 },
@@ -10,12 +13,26 @@ const WEIGHTS = [
   { label: "Extrabold", weight: 800 },
 ];
 
+// Same recipe as the color palette/logo pages' .color-frame-reveal (opacity
+// + upward offset, animating together). 7 lines; spaced for a quick,
+// readable top-to-bottom reveal once scrolled into view.
+const STAGGER_STEP = 30;
+
 export default function FontWeightShowcase() {
+  const ref = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
+  const revealClass = `color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`;
+
   return (
     <div className="weight-showcase-block">
-      <div className="weight-showcase">
-        {WEIGHTS.map(({ label, weight }) => (
-          <p key={weight} style={{ fontWeight: weight }}>
+      <div className="weight-showcase" ref={ref}>
+        {WEIGHTS.map(({ label, weight }, index) => (
+          <p
+            key={weight}
+            className={revealClass}
+            style={{ fontWeight: weight, transitionDelay: `${index * STAGGER_STEP}ms` }}
+          >
             {label}
           </p>
         ))}
