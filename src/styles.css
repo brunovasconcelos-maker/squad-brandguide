@@ -82,11 +82,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 133px;
+  gap: 4px;
   flex-shrink: 0;
 }
 
-.nav__menu-button {
+.nav__menu-button,
+.nav__cart-button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,6 +103,31 @@ body {
 .nav__menu-icon {
   width: 24px;
   height: 24px;
+}
+
+.nav__cart-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.nav__cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 360px;
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1;
+  box-sizing: border-box;
 }
 
 /* CTA button */
@@ -1711,7 +1738,7 @@ body {
 
 .image-grid__cell-download {
   position: absolute;
-  top: 12px;
+  bottom: 12px;
   right: 12px;
   display: flex;
   align-items: center;
@@ -1737,9 +1764,9 @@ body {
   -webkit-mask-size: contain;
 }
 
-.image-grid__cell-checkbox {
+.image-grid__cell-cart-toggle {
   position: absolute;
-  bottom: 12px;
+  top: 12px;
   right: 12px;
   display: flex;
   align-items: center;
@@ -1750,24 +1777,24 @@ body {
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, background 0.2s ease;
   cursor: pointer;
 }
 
-.image-grid__cell-checkbox svg {
+.image-grid__cell-cart-toggle svg {
   width: 20px;
   height: 20px;
 }
 
-/* box-shadow (not outline) so the ring is guaranteed to composite above the
-   card's own image layer and respect overflow:hidden + border-radius
-   consistently across cards — outline rendered invisibly on the non-square
-   (16:9, object-fit: cover) cards despite matching computed styles. */
-.image-grid__cell--selected {
-  box-shadow: inset 0 0 0 2px var(--color-white);
+.image-grid__cell-cart-toggle-icon {
+  width: 16px;
+  height: 16px;
 }
 
-.image-grid__cell--selected .image-grid__cell-checkbox {
+/* Added items stay visible without needing hover, so it's clear at a
+   glance which cards are already in the cart. */
+.image-grid__cell-cart-toggle--added {
+  background: var(--color-white);
   opacity: 1;
 }
 
@@ -1777,56 +1804,9 @@ body {
 .image-grid__cell:focus-within .image-grid__cell-title,
 .image-grid__cell:hover .image-grid__cell-download,
 .image-grid__cell:focus-within .image-grid__cell-download,
-.image-grid__cell:hover .image-grid__cell-checkbox,
-.image-grid__cell:focus-within .image-grid__cell-checkbox {
+.image-grid__cell:hover .image-grid__cell-cart-toggle,
+.image-grid__cell:focus-within .image-grid__cell-cart-toggle {
   opacity: 1;
-}
-
-/* In selection mode, only the checkbox shows on hover — the per-card
-   download icon steps aside for the bulk download button instead. Higher
-   specificity than the base hover rule above so it wins regardless of
-   stylesheet order. */
-.image-grid--selecting .image-grid__cell:hover .image-grid__cell-download,
-.image-grid--selecting .image-grid__cell:focus-within .image-grid__cell-download {
-  opacity: 0;
-}
-
-.image-grid__bulk-download {
-  position: fixed;
-  z-index: 20;
-  right: 40px;
-  bottom: 30px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 48px;
-  padding: 8px 16px 8px 8px;
-  border: none;
-  border-radius: 360px;
-  background: var(--color-white);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-weight: 510;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: -0.23px;
-  color: var(--color-black);
-  white-space: nowrap;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.image-grid__bulk-download:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.image-grid__bulk-download svg {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  box-sizing: border-box;
-  flex-shrink: 0;
 }
 
 @media (max-width: 1730px) {
@@ -1848,14 +1828,19 @@ body {
     height: 20px;
   }
 
-  .image-grid__cell-checkbox {
+  .image-grid__cell-cart-toggle {
     width: 32px;
     height: 32px;
   }
 
-  .image-grid__cell-checkbox svg {
+  .image-grid__cell-cart-toggle svg {
     width: 18px;
     height: 18px;
+  }
+
+  .image-grid__cell-cart-toggle-icon {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -1878,19 +1863,157 @@ body {
     height: 16px;
   }
 
-  .image-grid__cell-checkbox {
+  .image-grid__cell-cart-toggle {
     width: 28px;
     height: 28px;
   }
 
-  .image-grid__cell-checkbox svg {
+  .image-grid__cell-cart-toggle svg {
     width: 16px;
     height: 16px;
   }
 
-  .image-grid__bulk-download {
-    right: 20px;
+  .image-grid__cell-cart-toggle-icon {
+    width: 12px;
+    height: 12px;
   }
+}
+
+/* Cart panel — floating dropdown anchored under the nav cart button */
+
+.cart-panel {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  padding: 20px;
+  border: 1px solid #525b5b;
+  border-radius: 8px;
+  background: var(--color-bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+
+@starting-style {
+  .cart-panel {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.cart-panel__title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+.cart-panel__empty {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #a3a3a3;
+}
+
+.cart-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.cart-panel__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-panel__thumb {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.cart-panel__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cart-panel__item-title {
+  margin: 0;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-panel__item-format {
+  height: 22px;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.cart-panel__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-panel__remove:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cart-panel__remove svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cart-panel__download-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: none;
+  border-radius: 360px;
+  background: var(--color-white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 510;
+  font-size: 16px;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.cart-panel__download-all:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Lightbox */

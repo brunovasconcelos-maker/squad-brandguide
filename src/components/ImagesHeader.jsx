@@ -4,14 +4,7 @@ import clearIcon from "../../assets/icons/X.svg";
 import FilterPanel from "./FilterPanel";
 import { buildFilterLabel, createDefaultFilters, isDefaultFilters } from "../utils/imageFilters";
 
-export default function ImagesHeader({
-  count,
-  filters,
-  onApply,
-  showFormato = true,
-  selectedCount = 0,
-  onClearSelection,
-}) {
+export default function ImagesHeader({ count, filters, onApply, showFormato = true }) {
   const [panelOpen, setPanelOpen] = useState(false);
 
   return (
@@ -50,16 +43,6 @@ export default function ImagesHeader({
               style={{ maskImage: `url(${clearIcon})`, WebkitMaskImage: `url(${clearIcon})` }}
             />
             Limpar
-          </button>
-        )}
-
-        {selectedCount > 0 && (
-          <button className="ver-contraste" type="button" onClick={onClearSelection}>
-            <span
-              className="ver-contraste__icon ver-contraste__icon--mask"
-              style={{ maskImage: `url(${clearIcon})`, WebkitMaskImage: `url(${clearIcon})` }}
-            />
-            Cancelar Seleção
           </button>
         )}
       </div>
