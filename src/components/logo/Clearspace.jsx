@@ -3,10 +3,12 @@ import clearspaceImg from "../../../assets/images/clearspace.png";
 import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
-// Matches the doubled duration used by LogoGrid/UsosIncorretos, so this
-// single frame gets one clear movement at the same pace as the rest of
-// the page (no stagger needed — there's only one frame).
-const ITEM_DURATION = 440;
+// Matches LogoGrid/UsosIncorretos: a taller starting offset (this frame is
+// larger than the color palette page's) and duration extended by another
+// 0.5s on top of the already-doubled 440ms, so this single frame gets one
+// clear, slower movement (no stagger needed — there's only one frame).
+const OFFSET_PX = 60;
+const ITEM_DURATION = 940;
 
 export default function Clearspace() {
   const ref = useRef(null);
@@ -29,7 +31,10 @@ export default function Clearspace() {
       </div>
       <div
         className={`clearspace-panel color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`}
-        style={{ transitionDuration: `${ITEM_DURATION}ms` }}
+        style={{
+          transform: `translateY(${visible ? 0 : -OFFSET_PX}px)`,
+          transitionDuration: `${ITEM_DURATION}ms`,
+        }}
         ref={ref}
       >
         <img

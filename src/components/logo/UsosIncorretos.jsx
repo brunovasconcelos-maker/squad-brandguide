@@ -5,12 +5,15 @@ import FailBadge from "./FailBadge";
 import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
-// Roughly double the base .color-frame-reveal recipe (220ms/card) so the
-// motion reads clearly instead of feeling instant — a per-card duration and
-// stagger step overridden inline (the shared class stays untouched, so
-// Paleta de Cores' own pacing is unaffected). 4 cards (2x2): a 2-item row's
-// entrance takes ~0.5s end to end.
-const ITEM_DURATION = 440;
+// These frames are larger than the color palette page's, so the base
+// .color-frame-reveal recipe (32px offset, 220ms) reads too subtly here —
+// overridden inline (the shared class stays untouched, so Paleta de Cores'
+// own pacing/offset is unaffected): a taller starting offset for clearly
+// visible downward movement, and duration extended by another 0.5s on top
+// of the already-doubled 440ms. 4 cards (2x2): a 2-item row's entrance
+// takes ~1s end to end.
+const OFFSET_PX = 60;
+const ITEM_DURATION = 940;
 const STAGGER_STEP = 60;
 
 export default function UsosIncorretos() {
@@ -19,6 +22,7 @@ export default function UsosIncorretos() {
   const visible = useRevealOnScroll(ref, { skip: prefersReducedMotion });
   const revealClass = `color-frame-reveal${visible ? " color-frame-reveal--visible" : ""}`;
   const delay = (index) => ({
+    transform: `translateY(${visible ? 0 : -OFFSET_PX}px)`,
     transitionDuration: `${ITEM_DURATION}ms`,
     transitionDelay: `${index * STAGGER_STEP}ms`,
   });
