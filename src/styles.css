@@ -982,6 +982,10 @@ body {
   text-align: center;
 }
 
+/* Grows from 0 via real width/height (not transform: scale) so the
+   surrounding text reflows as each image claims its space — vertical-align:
+   middle keeps it centered on the text's midline as height grows, and
+   inline flow naturally pushes trailing text further away as width grows. */
 .hero-panel__img {
   width: 138px;
   height: 70px;
@@ -990,6 +994,14 @@ body {
   vertical-align: middle;
   margin: 0 4px;
   background: #d9d9d9;
+  transition: width 180ms var(--ease-out), height 180ms var(--ease-out);
+}
+
+@starting-style {
+  .hero-panel__img {
+    width: 0;
+    height: 0;
+  }
 }
 
 /* Font weight showcase */
@@ -2909,7 +2921,8 @@ body {
   .home-menu-overlay-backdrop,
   .home-menu-overlay,
   .color-frame-reveal,
-  .color-frame-reveal--visible {
+  .color-frame-reveal--visible,
+  .hero-panel__img {
     transition: none !important;
   }
 
@@ -2928,6 +2941,11 @@ body {
     .home-menu-overlay {
       opacity: 1;
       transform: none;
+    }
+
+    .hero-panel__img {
+      width: 138px;
+      height: 70px;
     }
   }
 
