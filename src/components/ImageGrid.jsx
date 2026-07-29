@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Lightbox from "./Lightbox";
 import downloadIcon from "../../assets/icons/download.svg";
-import checkIcon from "../../assets/icons/Check.svg";
+import checkCircleIcon from "../../assets/icons/CheckCircle.svg";
 import { useCart } from "../context/CartContext";
 
 export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full", pageSlug }) {
@@ -52,7 +52,10 @@ export default function ImageGrid({ images, aspect = "16:9", tagsVariant = "full
               }}
             >
               {inCart ? (
-                <img className="image-grid__cell-cart-toggle-icon" src={checkIcon} alt="" />
+                <span
+                  className="image-grid__cell-cart-toggle-icon"
+                  style={{ maskImage: `url(${checkCircleIcon})`, WebkitMaskImage: `url(${checkCircleIcon})` }}
+                />
               ) : (
                 <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10 4.5v11M4.5 10h11" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
