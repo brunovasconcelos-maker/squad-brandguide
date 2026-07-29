@@ -1336,6 +1336,90 @@ body {
   white-space: nowrap;
 }
 
+/* Logo page primary Recursos rows: size stepper + download/cart icon
+   buttons, instead of the plain text download link above. */
+.recursos-row--interactive {
+  align-items: center;
+}
+
+.recursos-row__stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.recursos-row__stepper-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #525b5b;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-white);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.recursos-row__stepper-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.recursos-row__stepper-value {
+  min-width: 28px;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.recursos-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.recursos-row__icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.recursos-row__icon-button:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.recursos-row__icon-button-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: var(--color-white);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* Fixed success green, matching the grid cards' cart-added indicator. */
+.recursos-row__icon-button--added .recursos-row__icon-button-icon {
+  background-color: #16a34a;
+}
+
 /* Image grid (Imagens & Vídeos, Personagens) */
 
 .images-header {
