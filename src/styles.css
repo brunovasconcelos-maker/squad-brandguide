@@ -1800,8 +1800,8 @@ body {
 }
 
 .image-grid__cell-cart-toggle-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   /* Fixed success green, not tied to any character's brand color. */
   background-color: #16a34a;
@@ -1814,9 +1814,15 @@ body {
 }
 
 /* Added items stay visible without needing hover, so it's clear at a
-   glance which cards are already in the cart. */
+   glance which cards are already in the cart. CheckCircle.svg already draws
+   its own circle, so the button sheds the "+" state's circular chrome
+   (background, size, focus ring) entirely and just becomes the bare icon. */
 .image-grid__cell-cart-toggle--added {
-  background: var(--color-white);
+  width: 24px;
+  height: 24px;
+  background: none;
+  border-radius: 0;
+  outline: none;
   opacity: 1;
 }
 
@@ -1861,8 +1867,13 @@ body {
   }
 
   .image-grid__cell-cart-toggle-icon {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .image-grid__cell-cart-toggle--added {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -1896,8 +1907,13 @@ body {
   }
 
   .image-grid__cell-cart-toggle-icon {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .image-grid__cell-cart-toggle--added {
+    width: 16px;
+    height: 16px;
   }
 }
 
