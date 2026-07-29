@@ -1862,8 +1862,9 @@ body {
 }
 
 /* Shared container for both the "+" (add) and checkmark (added) states —
-   same circular background/size in both; only the icon glyph inside
-   differs, so the two never drift out of sync again. */
+   same circular background/size in both, matching .image-grid__cell-download
+   exactly; only the icon glyph inside differs, so the two never drift out
+   of sync again. */
 .image-grid__cell-cart-toggle {
   position: absolute;
   top: 12px;
@@ -1871,8 +1872,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.4);
@@ -1883,8 +1884,8 @@ body {
 
 .image-grid__cell-cart-toggle svg,
 .image-grid__cell-cart-toggle-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
 }
 
@@ -1937,14 +1938,14 @@ body {
   }
 
   .image-grid__cell-cart-toggle {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
   }
 
   .image-grid__cell-cart-toggle svg,
   .image-grid__cell-cart-toggle-icon {
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -1968,14 +1969,14 @@ body {
   }
 
   .image-grid__cell-cart-toggle {
-    width: 16px;
-    height: 16px;
+    width: 28px;
+    height: 28px;
   }
 
   .image-grid__cell-cart-toggle svg,
   .image-grid__cell-cart-toggle-icon {
-    width: 8px;
-    height: 8px;
+    width: 16px;
+    height: 16px;
   }
 }
 
