@@ -1980,17 +1980,20 @@ body {
   }
 }
 
-/* Cart panel — floating dropdown anchored under the nav cart button */
+/* Cart panel — floating dropdown anchored under the nav cart button.
+   Spacing/sizing/colors taken from Figma node 301:4084 (Branding Site):
+   272px content column inside a 23px inset, 20px stacking gap, 48px thumbs
+   with a 16px gap to a 4px-gap title/format stack. */
 
 .cart-panel {
   position: fixed;
   z-index: 60;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 340px;
+  gap: 20px;
+  width: 318px;
   max-width: calc(100vw - 40px);
-  padding: 20px;
+  padding: 23px;
   border: 1px solid #525b5b;
   border-radius: 8px;
   background: var(--color-bg);
@@ -2008,37 +2011,43 @@ body {
   }
 }
 
-.cart-panel__title {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 1.2;
-  color: var(--color-white);
-}
-
 .cart-panel__empty {
   margin: 0;
   font-family: "Inter", sans-serif;
+  font-weight: 500;
   font-size: 14px;
-  color: #a3a3a3;
+  line-height: 1.2;
+  color: #a6abb2;
 }
 
 .cart-panel__list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: 320px;
+}
+
+/* Expanded shows every item, so the list (not the panel) takes the scroll —
+   capped so a large cart can't push the download button off-screen. */
+.cart-panel__list--expanded {
+  max-height: min(400px, 50vh);
   overflow-y: auto;
 }
 
 .cart-panel__row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cart-panel__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
 }
 
 .cart-panel__thumb {
@@ -2047,6 +2056,17 @@ body {
   flex-shrink: 0;
   border-radius: 4px;
   object-fit: cover;
+  /* Neutral backdrop from Figma, kept so assets with transparency (e.g. the
+     white logo SVGs) still read against the panel's dark background. */
+  background: #d9d9d9;
+}
+
+/* Wordmarks would be unreadable cropped to a 48px square, so they're scaled
+   to fit inside it instead — the Figma frame only shows placeholder squares,
+   so it doesn't specify this case. */
+.cart-panel__thumb--contain {
+  object-fit: contain;
+  padding: 4px;
 }
 
 .cart-panel__info {
@@ -2054,67 +2074,121 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  flex: 1 1 auto;
   min-width: 0;
 }
 
-.cart-panel__item-title {
+.cart-panel__item-title,
+.cart-panel__item-format {
   margin: 0;
   max-width: 100%;
   font-family: "Inter", sans-serif;
+  font-weight: 500;
   font-size: 14px;
-  color: var(--color-white);
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.cart-panel__item-title {
+  color: var(--color-white);
+}
+
 .cart-panel__item-format {
-  height: 22px;
-  padding: 4px 8px;
-  font-size: 10px;
+  color: #a6abb2;
 }
 
 .cart-panel__remove {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   flex-shrink: 0;
   border: none;
-  border-radius: 50%;
   background: transparent;
   cursor: pointer;
 }
 
-.cart-panel__remove:hover {
-  background: rgba(255, 255, 255, 0.08);
+.cart-panel__remove-icon {
+  width: 15px;
+  height: 15px;
+  background-color: var(--color-white);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
 }
 
-.cart-panel__remove svg {
-  width: 16px;
-  height: 16px;
+.cart-panel__actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cart-panel__see-all,
+.cart-panel__clear-all {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  font-family: "Fustat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cart-panel__see-all {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+.cart-panel__clear-all {
+  color: #a6abb2;
 }
 
 .cart-panel__download-all {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  gap: 8px;
+  height: 48px;
+  padding: 8px 16px 8px 8px;
   border: none;
   border-radius: 360px;
   background: var(--color-white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 510;
   font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
   color: var(--color-black);
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .cart-panel__download-all:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.cart-panel__download-all-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  box-sizing: content-box;
+  padding: 8px;
+  background-color: var(--color-black);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 24px 24px;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 24px 24px;
 }
 
 /* Lightbox */
