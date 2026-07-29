@@ -9,76 +9,11 @@ import logo1xWhite from "../../../assets/logo/logo-1x-white.png";
 import logo2xWhite from "../../../assets/logo/logo-2x-white.png";
 import logo3xWhite from "../../../assets/logo/logo-3x-white.png";
 import logo4xWhite from "../../../assets/logo/logo-4x-white.png";
-import downloadIcon from "../../../assets/icons/download.svg";
-import plusCircleIcon from "../../../assets/icons/PlusCircle.svg";
-import checkCircleIcon from "../../../assets/icons/CheckCircle.svg";
 import { useCart } from "../../context/CartContext";
+import { RecursosRow, SizeStepper } from "./RecursosRow";
 
 const PNG_BLACK = [logo1xBlack, logo2xBlack, logo3xBlack, logo4xBlack];
 const PNG_WHITE = [logo1xWhite, logo2xWhite, logo3xWhite, logo4xWhite];
-const MIN_SIZE = 1;
-const MAX_SIZE = 4;
-
-function maskStyle(icon) {
-  return { maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` };
-}
-
-function SizeStepper({ value, onChange }) {
-  return (
-    <div className="recursos-row__stepper">
-      <button
-        type="button"
-        className="recursos-row__stepper-button"
-        aria-label="Diminuir tamanho"
-        disabled={value <= MIN_SIZE}
-        onClick={() => onChange(value - 1)}
-      >
-        −
-      </button>
-      <span className="recursos-row__stepper-value">{value}x</span>
-      <button
-        type="button"
-        className="recursos-row__stepper-button"
-        aria-label="Aumentar tamanho"
-        disabled={value >= MAX_SIZE}
-        onClick={() => onChange(value + 1)}
-      >
-        +
-      </button>
-    </div>
-  );
-}
-
-function RecursosRow({ label, item, sizeControl, inCart, onToggleCart }) {
-  return (
-    <div className="recursos-row recursos-row--interactive">
-      <p className="recursos-row__label">{label}</p>
-      {sizeControl}
-      <div className="recursos-row__actions">
-        <a
-          className="recursos-row__icon-button"
-          href={item.src}
-          download={`${item.filename}.${item.extension}`}
-          aria-label={`Baixar ${item.title}`}
-        >
-          <span className="recursos-row__icon-button-icon" style={maskStyle(downloadIcon)} />
-        </a>
-        <button
-          type="button"
-          className={`recursos-row__icon-button${inCart ? " recursos-row__icon-button--added" : ""}`}
-          aria-label={inCart ? `Remover ${item.title} do carrinho` : `Adicionar ${item.title} ao carrinho`}
-          aria-pressed={inCart}
-          onClick={() => onToggleCart(item)}
-        >
-          <span
-            className="recursos-row__icon-button-icon"
-            style={maskStyle(inCart ? checkCircleIcon : plusCircleIcon)}
-          />
-        </button>
-      </div>
-    </div>
-  );
-}
 
 export default function RecursosPrimaria() {
   const [darkSize, setDarkSize] = useState(1);
