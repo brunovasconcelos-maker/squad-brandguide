@@ -108,6 +108,14 @@ body {
 .nav__cart-icon {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
+  background-color: var(--color-white);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
 }
 
 .nav__cart-badge {
@@ -1794,6 +1802,15 @@ body {
 .image-grid__cell-cart-toggle-icon {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
+  /* Fixed success green, not tied to any character's brand color. */
+  background-color: #16a34a;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
 }
 
 /* Added items stay visible without needing hover, so it's clear at a
