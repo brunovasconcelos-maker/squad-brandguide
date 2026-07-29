@@ -1861,6 +1861,9 @@ body {
   -webkit-mask-size: contain;
 }
 
+/* Shared container for both the "+" (add) and checkmark (added) states —
+   same circular background/size in both; only the icon glyph inside
+   differs, so the two never drift out of sync again. */
 .image-grid__cell-cart-toggle {
   position: absolute;
   top: 12px;
@@ -1868,8 +1871,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   border: none;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.4);
@@ -1878,15 +1881,14 @@ body {
   cursor: pointer;
 }
 
-.image-grid__cell-cart-toggle svg {
-  width: 20px;
-  height: 20px;
+.image-grid__cell-cart-toggle svg,
+.image-grid__cell-cart-toggle-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .image-grid__cell-cart-toggle-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
   /* Fixed success green, not tied to any character's brand color. */
   background-color: #16a34a;
   mask-repeat: no-repeat;
@@ -1898,15 +1900,9 @@ body {
 }
 
 /* Added items stay visible without needing hover, so it's clear at a
-   glance which cards are already in the cart. CheckCircle.svg already draws
-   its own circle, so the button sheds the "+" state's circular chrome
-   (background, size, focus ring) entirely and just becomes the bare icon. */
+   glance which cards are already in the cart. Container size/background
+   are unchanged from the "+" state — only the icon inside differs. */
 .image-grid__cell-cart-toggle--added {
-  width: 24px;
-  height: 24px;
-  background: none;
-  border-radius: 0;
-  outline: none;
   opacity: 1;
 }
 
@@ -1941,23 +1937,14 @@ body {
   }
 
   .image-grid__cell-cart-toggle {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
   }
 
-  .image-grid__cell-cart-toggle svg {
-    width: 18px;
-    height: 18px;
-  }
-
+  .image-grid__cell-cart-toggle svg,
   .image-grid__cell-cart-toggle-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .image-grid__cell-cart-toggle--added {
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -1981,23 +1968,14 @@ body {
   }
 
   .image-grid__cell-cart-toggle {
-    width: 28px;
-    height: 28px;
-  }
-
-  .image-grid__cell-cart-toggle svg {
     width: 16px;
     height: 16px;
   }
 
+  .image-grid__cell-cart-toggle svg,
   .image-grid__cell-cart-toggle-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .image-grid__cell-cart-toggle--added {
-    width: 16px;
-    height: 16px;
+    width: 8px;
+    height: 8px;
   }
 }
 
