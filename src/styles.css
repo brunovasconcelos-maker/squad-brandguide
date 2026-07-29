@@ -599,9 +599,14 @@ body {
   transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
 }
 
+/* transform: none (not translateY(0)) once settled — a non-"none" transform
+   value, even a visual no-op like translateY(0), makes this element the
+   containing block for any position:fixed descendant (e.g. CopyableColor's
+   .copy-tooltip), which silently breaks its viewport-relative positioning
+   after the card finishes animating in. */
 .color-frame-reveal.color-frame-reveal--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .primary-color-card {
