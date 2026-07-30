@@ -1151,10 +1151,21 @@ body {
   margin-bottom: 0;
 }
 
-/* Guide-line color pulled visually from the Figma export (a rasterized vector
-   stroke) — the connector doesn't expose an exact fill for vector strokes,
-   only fills on shapes/text. Flagged as an approximation, unlike every other
-   color on this page. */
+/* Letter Spacing panel: a single export carrying both the sample text and its
+   guide lines, centred in the panel and scaled to fit without distortion. */
+.type-sample-panel__guide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* object-position defaults to 50% 50%, so contain centres it on both axes. */
+}
+
+/* Line Height panel guide lines. Colour pulled visually from the Figma export
+   (a rasterized vector stroke) — the connector doesn't expose an exact fill for
+   vector strokes, only fills on shapes/text. Flagged as an approximation,
+   unlike every other colour on this page. */
 .guide-line {
   position: absolute;
   pointer-events: none;
@@ -1165,10 +1176,6 @@ body {
   left: 0;
   width: 100%;
   height: 1px;
-}
-
-.guide-line--v {
-  width: 1px;
 }
 
 /* Character cards with functional sliders */
