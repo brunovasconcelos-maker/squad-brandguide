@@ -1331,17 +1331,6 @@ body {
   color: var(--color-white);
 }
 
-.recursos-row__download {
-  flex-shrink: 0;
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--color-white);
-  text-decoration: none;
-  white-space: nowrap;
-}
 
 /* Logo page primary Recursos rows: size stepper + download/cart icon
    buttons, instead of the plain text download link above. */
@@ -2074,6 +2063,18 @@ body {
 .cart-panel__thumb--contain {
   object-fit: contain;
   padding: 4px;
+}
+
+/* Previewless downloads (fonts) label the file type instead. */
+.cart-panel__thumb--file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  color: #525b5b;
 }
 
 .cart-panel__info {
