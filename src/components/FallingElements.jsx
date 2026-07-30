@@ -169,6 +169,11 @@ export default function FallingElements() {
           }}
           className="falling-elements__item"
           onMouseEnter={() => handleHoverStart(element.filename)}
+          draggable={false}
+          // Backstop for the CSS/attribute guards: if a native drag is still
+          // initiated, cancelling it here stops the ghost image without
+          // touching the Matter.js mouse handling.
+          onDragStart={(event) => event.preventDefault()}
         >
           <img className="falling-elements__img" src={element.src} alt="" draggable={false} />
         </div>
