@@ -46,11 +46,35 @@ export default function Lightbox({ image, images, onClose, onNavigate, tagsVaria
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
 
+  // Locking the background with overflow:hidden alone collapses the document's
+  // scrollable height (html and body are both height:100%), so the browser
+  // clamps the window scroll to 0 and the grid behind the modal jumps to the
+  // top. Pinning the body at its current offset keeps the background exactly
+  // where it was, and the offset is handed back when the modal closes.
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const body = document.body;
+    const scrollY = window.scrollY;
+    const previous = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+    };
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+
     return () => {
-      document.body.style.overflow = previousOverflow;
+      body.style.overflow = previous.overflow;
+      body.style.position = previous.position;
+      body.style.top = previous.top;
+      body.style.left = previous.left;
+      body.style.right = previous.right;
+      window.scrollTo(0, scrollY);
     };
   }, []);
 
