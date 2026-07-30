@@ -9,6 +9,10 @@ import xIcon from "../../assets/icons/X.svg";
 // list is capped there and the rest stay hidden until expanded.
 const COLLAPSED_LIMIT = 5;
 
+// Extensions the 48px thumb can actually preview; anything else falls back to
+// a file-type label.
+const IMAGE_EXTENSIONS = new Set(["png", "jpg", "jpeg", "gif", "webp", "avif", "svg"]);
+
 function maskStyle(icon) {
   return { maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` };
 }
@@ -89,13 +93,22 @@ export default function CartPanel({ triggerRef, onClose }) {
             {visibleItems.map((item) => (
               <li className="cart-panel__row" key={item.id}>
                 <div className="cart-panel__item">
-                  {/* Logo-page assets are wordmarks, so they're fitted whole
-                      rather than cropped to fill like the photo/art grids. */}
-                  <img
-                    className={`cart-panel__thumb${item.pageSlug === "logo" ? " cart-panel__thumb--contain" : ""}`}
-                    src={item.src}
-                    alt=""
-                  />
+                  {IMAGE_EXTENSIONS.has(item.extension.toLowerCase()) ? (
+                    /* Logo-page assets are wordmarks, so they're fitted whole
+                       rather than cropped to fill like the photo/art grids. */
+                    <img
+                      className={`cart-panel__thumb${item.pageSlug === "logo" ? " cart-panel__thumb--contain" : ""}`}
+                      src={item.src}
+                      alt=""
+                    />
+                  ) : (
+                    /* Non-image downloads (e.g. the Fustat .ttf) have nothing
+                       to preview, so the thumb shows the file type instead of
+                       a broken <img>. */
+                    <span className="cart-panel__thumb cart-panel__thumb--file" aria-hidden="true">
+                      {item.extension.toUpperCase()}
+                    </span>
+                  )}
                   <div className="cart-panel__info">
                     <p className="cart-panel__item-title">{item.title}</p>
                     <p className="cart-panel__item-format">{item.extension.toUpperCase()}</p>

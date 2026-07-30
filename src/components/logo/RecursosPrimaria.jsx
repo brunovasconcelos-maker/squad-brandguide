@@ -10,7 +10,7 @@ import logo2xWhite from "../../../assets/logo/logo-2x-white.png";
 import logo3xWhite from "../../../assets/logo/logo-3x-white.png";
 import logo4xWhite from "../../../assets/logo/logo-4x-white.png";
 import { useCart } from "../../context/CartContext";
-import { RecursosRow, SizeStepper } from "./RecursosRow";
+import { RecursosRow, SizeStepper } from "../RecursosRow";
 
 const PNG_BLACK = [logo1xBlack, logo2xBlack, logo3xBlack, logo4xBlack];
 const PNG_WHITE = [logo1xWhite, logo2xWhite, logo3xWhite, logo4xWhite];

@@ -1,6 +1,6 @@
-import downloadIcon from "../../../assets/icons/download.svg";
-import plusCircleIcon from "../../../assets/icons/PlusCircle.svg";
-import checkCircleIcon from "../../../assets/icons/CheckCircle.svg";
+import downloadIcon from "../../assets/icons/download.svg";
+import plusCircleIcon from "../../assets/icons/PlusCircle.svg";
+import checkCircleIcon from "../../assets/icons/CheckCircle.svg";
 
 export const MIN_SIZE = 1;
 export const MAX_SIZE = 4;
