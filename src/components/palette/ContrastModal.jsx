@@ -1,35 +1,37 @@
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "../../utils/useReducedMotion";
-import { CHARACTERS } from "../../utils/imageFilters";
-import { getCharacter } from "../../data/colorPalette";
+import { characters, getCharacter } from "../../data/colorPalette";
 import { contrastRatio, WCAG_THRESHOLDS } from "../../utils/contrast";
 import checkIcon from "../../../assets/icons/Check.svg";
 import warningIcon from "../../../assets/icons/Warning.svg";
-import wazAvatar from "../../../assets/images/avatares/waz_avatar.png";
-import makyAvatar from "../../../assets/images/avatares/maky_avatar.png";
-import finAvatar from "../../../assets/images/avatares/fin_avatar.png";
-import pipoAvatar from "../../../assets/images/avatares/pipo_avatar.png";
-import juriAvatar from "../../../assets/images/avatares/juri_avatar.png";
-import opyAvatar from "../../../assets/images/avatares/opy_avatar.png";
 import Dropdown from "../Dropdown";
 
-const AVATARS = {
-  waz: wazAvatar,
-  maky: makyAvatar,
-  fin: finAvatar,
-  pipo: pipoAvatar,
-  juri: juriAvatar,
-  opy: opyAvatar,
-};
+// Read from the folder like the image grids do, so a new character's avatar
+// (e.g. nexo_avatar.png) is picked up by dropping the file in.
+const avatarModules = import.meta.glob("../../../assets/images/avatares/*_avatar.png", {
+  eager: true,
+  import: "default",
+});
+
+const AVATARS = Object.fromEntries(
+  Object.entries(avatarModules).map(([path, src]) => [
+    path.split("/").pop().replace("_avatar.png", ""),
+    src,
+  ])
+);
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-const CHARACTER_OPTIONS = CHARACTERS.map((key) => ({
-  key,
-  label: capitalize(key),
-  avatar: AVATARS[key],
+// Driven by the colour palette rather than the shared CHARACTERS list: this
+// modal compares colour scales, so the characters that belong in it are exactly
+// the ones that have a scale. CHARACTERS can't be widened to include Nexo — it
+// also expands "squad" gradients, which are built from the original six colours.
+const CHARACTER_OPTIONS = characters.map((character) => ({
+  key: character.name.toLowerCase(),
+  label: character.name,
+  avatar: AVATARS[character.name.toLowerCase()],
 }));
 
 const EXIT_DURATION = 220;
