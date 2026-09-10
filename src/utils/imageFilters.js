@@ -2,6 +2,13 @@ import { isVideoExtension } from "./mediaType";
 
 export const CHARACTERS = ["waz", "maky", "fin", "pipo", "juri", "opy"];
 
+// Personagens carries Nexo on top of the six above. It's kept separate from
+// CHARACTERS because that list also drives the colour-palette contrast modal,
+// the gradient filename parser and the Imagens/Assets filter panel — none of
+// which have Nexo data, so widening it there would surface dead options and
+// mis-tag every "squad" gradient.
+export const PERSONAGENS_CHARACTERS = [...CHARACTERS, "nexo"];
+
 export const FORMATS = [
   { key: "quadrado", label: "Quadrado (1:1)" },
   { key: "vertical", label: "Vertical (9:16)" },

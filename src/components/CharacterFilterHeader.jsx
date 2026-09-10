@@ -1,25 +1,29 @@
 import { CHARACTERS, toggleMultiFilter } from "../utils/imageFilters";
-import wazAvatar from "../../assets/images/avatares/waz_avatar.png";
-import makyAvatar from "../../assets/images/avatares/maky_avatar.png";
-import finAvatar from "../../assets/images/avatares/fin_avatar.png";
-import pipoAvatar from "../../assets/images/avatares/pipo_avatar.png";
-import juriAvatar from "../../assets/images/avatares/juri_avatar.png";
-import opyAvatar from "../../assets/images/avatares/opy_avatar.png";
 
-const AVATARS = {
-  waz: wazAvatar,
-  maky: makyAvatar,
-  fin: finAvatar,
-  pipo: pipoAvatar,
-  juri: juriAvatar,
-  opy: opyAvatar,
-};
+// Read from the folder like the image grids do, so a new character's avatar
+// (e.g. nexo_avatar.png) is picked up by dropping the file in.
+const avatarModules = import.meta.glob("../../assets/images/avatares/*_avatar.png", {
+  eager: true,
+  import: "default",
+});
+
+const AVATARS = Object.fromEntries(
+  Object.entries(avatarModules).map(([path, src]) => [
+    path.split("/").pop().replace("_avatar.png", ""),
+    src,
+  ])
+);
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function CharacterFilterHeader({ count, selected, onSelectedChange }) {
+export default function CharacterFilterHeader({
+  count,
+  selected,
+  onSelectedChange,
+  characters = CHARACTERS,
+}) {
   return (
     <div className="images-header">
       <div className="gradientes-pills">
@@ -30,14 +34,16 @@ export default function CharacterFilterHeader({ count, selected, onSelectedChang
         >
           Todos
         </button>
-        {CHARACTERS.map((key) => (
+        {characters.map((key) => (
           <button
             key={key}
             type="button"
             className={`character-pill${selected.includes(key) ? " character-pill--selected" : ""}`}
             onClick={() => onSelectedChange(toggleMultiFilter(selected, key))}
           >
-            <img className="character-pill__avatar" src={AVATARS[key]} alt="" />
+            {/* Avatar is optional so a character whose portrait hasn't been
+                added yet shows a label-only pill instead of a broken image. */}
+            {AVATARS[key] && <img className="character-pill__avatar" src={AVATARS[key]} alt="" />}
             {capitalize(key)}
           </button>
         ))}
