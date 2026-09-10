@@ -14,7 +14,10 @@ export const images = Object.entries(modules)
     const file = path.split("/").pop();
     const extension = file.split(".").pop();
     const filename = file.replace(/\.[^.]+$/, "");
-    const character = filename.split("_")[0];
+    // Accept both naming conventions present in the folder — waz_pose_1.png and
+    // Nexo-Pose-1.png — so the character key is always the lowercase prefix and
+    // matches the filter pills regardless of how the file was exported.
+    const character = filename.split(/[_-]/)[0].toLowerCase();
     return {
       filename,
       title: capitalize(character),

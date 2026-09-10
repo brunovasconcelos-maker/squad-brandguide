@@ -2,7 +2,7 @@ import { useState } from "react";
 import CharacterFilterHeader from "../components/CharacterFilterHeader";
 import ImageGrid from "../components/ImageGrid";
 import { images } from "../data/personagens";
-import { matchesAnyCharacter } from "../utils/imageFilters";
+import { matchesAnyCharacter, PERSONAGENS_CHARACTERS } from "../utils/imageFilters";
 
 export default function PersonagensContent() {
   const [selected, setSelected] = useState([]);
@@ -15,6 +15,7 @@ export default function PersonagensContent() {
         count={filteredImages.length}
         selected={selected}
         onSelectedChange={setSelected}
+        characters={PERSONAGENS_CHARACTERS}
       />
       <ImageGrid images={filteredImages} aspect="1:1" tagsVariant="characters" pageSlug="personagens" />
     </div>
