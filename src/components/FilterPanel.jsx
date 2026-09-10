@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../utils/imageFilters";
+import { FILTER_CHARACTERS, FORMATS, TYPES, toggleMultiFilter } from "../utils/imageFilters";
 import { usePrefersReducedMotion } from "../utils/useReducedMotion";
 import imageSquareIcon from "../../assets/icons/ImageSquare.svg";
 import imageSquareFillIcon from "../../assets/icons/ImageSquare-1.svg";
@@ -112,7 +112,7 @@ export default function FilterPanel({ appliedFilters, onCancel, onSave, showForm
               >
                 Todos: Squad
               </button>
-              {CHARACTERS.map((key) => (
+              {FILTER_CHARACTERS.map((key) => (
                 <button
                   key={key}
                   type="button"

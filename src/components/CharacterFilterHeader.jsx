@@ -1,4 +1,4 @@
-import { CHARACTERS, toggleMultiFilter } from "../utils/imageFilters";
+import { FILTER_CHARACTERS, toggleMultiFilter } from "../utils/imageFilters";
 
 // Read from the folder like the image grids do, so a new character's avatar
 // (e.g. nexo_avatar.png) is picked up by dropping the file in.
@@ -22,7 +22,7 @@ export default function CharacterFilterHeader({
   count,
   selected,
   onSelectedChange,
-  characters = CHARACTERS,
+  characters = FILTER_CHARACTERS,
 }) {
   return (
     <div className="images-header">

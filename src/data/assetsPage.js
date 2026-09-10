@@ -60,7 +60,8 @@ export const images = Object.entries(modules)
     const file = path.split("/").pop();
     const extension = file.split(".").pop();
     const filename = file.replace(/\.[^.]+$/, "");
-    const character = filename.split("_")[0];
+    // Lowercased so a Nexo_Asset_1.png style export still matches the pills.
+    const character = filename.split("_")[0].toLowerCase();
     return {
       filename,
       title: TITLES[filename] || filename,
