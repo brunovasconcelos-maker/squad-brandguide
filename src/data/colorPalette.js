@@ -187,6 +187,33 @@ export const characters = [
       { step: 95, hex: "#E9FBFC", badges: [{ color: "black", grade: "AAA" }] },
     ],
   },
+  // Nexo (Figma node 391:1967). Hexes here are the swatch FILL values read from
+  // Figma, not the captions printed under them — that section was duplicated
+  // from Opy and its caption text still shows Opy's teal hexes while the fills
+  // were recolored to Nexo's orange. Step 60 is the cross-check: its fill
+  // (#F98525) matches the primary-row card exactly, captions and all.
+  {
+    name: "Nexo",
+    primaryStep: 60,
+    primaryRgb: "rgb(249, 133, 37)",
+    primaryHsl: "hsl(27, 95%, 56%)",
+    scale: [
+      { step: 10, hex: "#321702", badges: [{ color: "white", grade: "AAA" }] },
+      { step: 20, hex: "#632E03", badges: [{ color: "white", grade: "AAA" }] },
+      // Figma currently has step 40's fill (#C65D06) duplicated onto step 30,
+      // leaving two identical swatches. Derived from the ramp instead: steps
+      // 10/20/40/50 are exactly 0.20/0.40/0.80/1.00 of #F87407, so step 30 is
+      // 0.60 of it. Replace this with the real value once Figma is corrected.
+      { step: 30, hex: "#944604", badges: [{ color: "black", grade: "AA" }] },
+      { step: 40, hex: "#C65D06", badges: [{ color: "black", grade: "AA" }] },
+      { step: 50, hex: "#F87407", badges: [{ color: "black", grade: "AAA" }] },
+      { step: 60, hex: "#F98525", badges: [{ color: "black", grade: "AAA" }] },
+      { step: 70, hex: "#FBAC6A", badges: [{ color: "black", grade: "AAA" }] },
+      { step: 80, hex: "#FCC79C", badges: [{ color: "black", grade: "AAA" }] },
+      { step: 90, hex: "#FDE3CD", badges: [{ color: "black", grade: "AAA" }] },
+      { step: 95, hex: "#FEF1E6", badges: [{ color: "black", grade: "AAA" }] },
+    ],
+  },
 ];
 
 export function getCharacter(name) {
