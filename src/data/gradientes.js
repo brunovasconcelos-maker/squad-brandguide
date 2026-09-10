@@ -1,4 +1,4 @@
-import { CHARACTERS } from "../utils/imageFilters";
+import { CHARACTERS, FILTER_CHARACTERS } from "../utils/imageFilters";
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -6,12 +6,17 @@ function capitalize(word) {
 
 // Parses "waz_gradient_1" -> ["waz"], "pipo_waz_gradient" -> ["waz", "pipo"]
 // (reordered to the canonical character order), "squad_gradient_1" -> all six.
+//
+// "squad" stays at CHARACTERS: those gradients were built from the six official
+// brand colours, so expanding it to include Nexo would tag them with a colour
+// they don't contain. Explicitly named files match against FILTER_CHARACTERS so
+// a nexo_gradient_1.png dropped in later is picked up by the Nexo pill.
 function parseCharacters(filename) {
   const match = filename.match(/^(.+)_gradient(?:_\d+)?$/);
   const namesPart = match ? match[1] : filename;
   if (namesPart === "squad") return [...CHARACTERS];
-  const present = namesPart.split("_");
-  return CHARACTERS.filter((character) => present.includes(character));
+  const present = namesPart.toLowerCase().split("_");
+  return FILTER_CHARACTERS.filter((character) => present.includes(character));
 }
 
 // Picks up every image currently in the folder — and any added later —
