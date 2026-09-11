@@ -204,7 +204,12 @@ export const characters = [
       // leaving two identical swatches. Derived from the ramp instead: steps
       // 10/20/40/50 are exactly 0.20/0.40/0.80/1.00 of #F87407, so step 30 is
       // 0.60 of it. Replace this with the real value once Figma is corrected.
-      { step: 30, hex: "#944604", badges: [{ color: "black", grade: "AA" }] },
+      //
+      // The badge is computed for THIS hex rather than copied from Figma: the
+      // frame's black badge belongs to the duplicated #C65D06 (black 4.97:1,
+      // white 4.23:1). Against #944604 that flips — white 6.69:1 passes AA,
+      // black 3.14:1 fails — so the recommended text colour here is white.
+      { step: 30, hex: "#944604", badges: [{ color: "white", grade: "AA" }] },
       { step: 40, hex: "#C65D06", badges: [{ color: "black", grade: "AA" }] },
       { step: 50, hex: "#F87407", badges: [{ color: "black", grade: "AAA" }] },
       { step: 60, hex: "#F98525", badges: [{ color: "black", grade: "AAA" }] },
